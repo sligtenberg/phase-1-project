@@ -7,21 +7,63 @@
     </head>
     <body>
         <h1>Stevo's Snack Sampler</h1>
-        <table>
+        <div id="role-toggle">
+            <input type="radio" value="customer" checked>
+            <label>Customer</label>
+          </div>
+          <div>
+            <input type="radio" value="maintenance">
+            <label>Maintenance</label>
+          </div><br>
+        <table id="snack-display">
             <tr>
-                <td>Snack 1</td>
-                <td>Snack 2</td>
+                <td><button type="button">Snack 1</button></td>
+                <td><button type="button">Snack 2</button></td>
             </tr>
             <tr>
-                <td>Snack 3</td>
-                <td>Snack 4</td>
+                <td><button type="button">Snack 3</button></td>
+                <td><button type="button">Snack 4</button></td>
             </tr>
             <tr>
-                <td>Snack 5</td>
-                <td>Snack 6</td>
+                <td><button type="button">Snack 5</button></td>
+                <td><button type="button">Snack 6</button></td>
             </tr>
-          </table>
-          
+          </table><br>
+          <div id="add-money">
+            <button type="button">$5.00 bill</button>
+            <button type="button">$1.00 bill</button>
+            <button type="button">Quarter</button>
+            <button type="button">Dime</button>
+            <button type="button">Nickel</button>
+          </div>
+          <div id="amt-tendered"><br>
+                Amount tendered:_______
+                <button type="button">Return change</button>
+          </div>
+          <br>
+          <div id="dispenser">
+            *Dispenser Area*
+          </div>
+          <h4>Maintenance Controls</h4>
+          <div id="money-box">
+            <button id="check=status" type="button">Check status</button>
+            <button id="auto-reset" type="button">Auto reset</button><br><br>
+            <form id="add-change">Add Change<br>
+                <label for="quarters">Quarters: </label><input type="text" placeholder="0"><br>
+                <label for="dimes">Dimes: </label><input type="text" placeholder="0"><br>
+                <label for="nickels">Nickels: </label><input type="text" placeholder="0">
+                <input type="submit" value="Submit">
+            </form><br>
+            <form id="collect-cash">Collect Cash<br>
+                <label for="fivers">$5.00 bills: </label><input type="text" placeholder="0"><br>
+                <label for="bucks">$1.00 bills: </label><input type="text" placeholder="0"><br>
+                <label for="quarters">Quarters: </label><input type="text" placeholder="0"><br>
+                <label for="dimes">Dimes: </label><input type="text" placeholder="0"><br>
+                <label for="nickels">Nickels: </label><input type="text" placeholder="0">
+                <input type="submit" value="Submit">
+            </form>
+            <h4>Service Report</h4>
+        </div>
         <script src='js/index.js'></script>
     </body>
 </html>

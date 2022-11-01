@@ -1,8 +1,18 @@
-table, td {
+#snack-display {
     border: 1px solid;
   }  
 td {
+  border: 1px solid;
   height: 70px;
   width: 100px;
   text-align: center;
+}
+#dispenser {
+  height: 30px;
+  width: 150px;
+  border: 1px solid;
+}
+
+input[type=text] {
+  width: 20px;
 }
