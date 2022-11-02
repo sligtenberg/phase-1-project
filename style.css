@@ -16,3 +16,7 @@ td {
 input[type=text] {
   width: 20px;
 }
+
+#amt-tendered, button {
+  text-align: left;
+}
