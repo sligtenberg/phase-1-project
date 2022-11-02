@@ -10,51 +10,60 @@
         <div id="role-toggle">
             <input type="radio" value="customer" checked>
             <label>Customer</label>
-          </div>
-          <div>
             <input type="radio" value="maintenance">
             <label>Maintenance</label>
-          </div><br>
+          </div>
         <table id="snack-display">
             <tr>
-                <td><button type="button">Snack 1</button></td>
-                <td><button type="button">Snack 2</button></td>
+                <td><button type="button" disabled>Snack 1</button></td>
+                <td><button type="button" disabled>Snack 2</button></td>
+                <td><button type="button" disabled>Snack 2</button></td>
+
             </tr>
             <tr>
-                <td><button type="button">Snack 3</button></td>
-                <td><button type="button">Snack 4</button></td>
+                <td><button type="button" disabled>Snack 3</button></td>
+                <td><button type="button" disabled>Snack 4</button></td>
+                <td><button type="button" disabled>Snack 2</button></td>
+
             </tr>
             <tr>
-                <td><button type="button">Snack 5</button></td>
-                <td><button type="button">Snack 6</button></td>
+                <td><button type="button" disabled>Snack 5</button></td>
+                <td><button type="button" disabled>Snack 6</button></td>
+                <td><button type="button" disabled>Snack 2</button></td>
+
             </tr>
-          </table><br>
-          <div id="add-money">
-            <button type="button" value="fivers">$5.00 bill</button>
-            <button type="button" value="bucks">$1.00 bill</button>
-            <button type="button" value="quarters">Quarter</button>
-            <button type="button" value="dimes">Dime</button>
-            <button type="button" value="nickels">Nickel</button>
+            <tr>
+                <td><button type="button" disabled>Snack 5</button></td>
+                <td><button type="button" disabled>Snack 6</button></td>
+                <td><button type="button" disabled>Snack 2</button></td>
+
+            </tr>
+          </table>
+          <div>
+            <h4>Click to insert given denomination</h4>
+            <div id="add-money">
+                <button type="button" value="fivers">$5.00 bill</button>
+                <button type="button" value="bucks">$1.00 bill</button>
+                <button type="button" value="quarters">Quarter</button>
+                <button type="button" value="dimes">Dime</button>
+                <button type="button" value="nickels">Nickel</button>
+            </div>
+            <div id="amt-tendered">Amount tendered: <span>$0.00</span><button type="button">Return money</button>
+            </div>
           </div>
-          <div id="amt-tendered"><br>
-            Amount tendered: 
-            <span>$0.00</span>
-            <button type="button">Return money</button>
-          </div>
-          <br>
+          
           <div id="dispenser">
-            *Dispenser Area*
           </div>
-          <h4>Maintenance Controls</h4>
-          <div id="money-box">
+          <div id="maintenance-controls">
+            <h4>Maintenance Controls</h4>
             <button id="check=status" type="button">Check status</button>
-            <button id="auto-reset" type="button">Auto reset</button><br><br>
+            <button id="auto-reset" type="button">Auto reset</button><br>
             <form id="add-change">Add Change<br>
                 <label for="quarters">Quarters: </label><input type="text" placeholder="0"><br>
                 <label for="dimes">Dimes: </label><input type="text" placeholder="0"><br>
                 <label for="nickels">Nickels: </label><input type="text" placeholder="0">
                 <input type="submit" value="Submit">
-            </form><br>
+            </form>
             <form id="collect-cash">Collect Cash<br>
                 <label for="fivers">$5.00 bills: </label><input type="text" placeholder="0"><br>
                 <label for="bucks">$1.00 bills: </label><input type="text" placeholder="0"><br>

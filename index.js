@@ -1,46 +1,61 @@
 document.addEventListener('DOMContentLoaded', () => {
-    document.getElementById('amt-tendered').children[2].addEventListener('click', () => tenderedMoney.returnMoney())
-    handleMoneyInstertion();
+    populateSnacks();
+    eventListeners();
 })
 
-// this function adds event listeners to the money tendering buttons
-// the event listener calls handleMoneyTenderButton and passes the button that was clicked as an arg
-function handleMoneyInstertion () {
-    let intertButtons = document.getElementById('add-money').children
-    for (let button of intertButtons) {
-        button.addEventListener('click', () => handleMoneyTenderButton(button))
-    }
+// this function will populate the snacks from the server
+const populateSnacks = () => {
+    fetch('http://localhost:3000/snacks')
+    .then(response => response.json())
+    .then(snackCollObj => {
+        console.log(snackCollObj)
+        let table = document.getElementById('snack-display')
+        for (let i = 0; i < table.rows.length; i++) {
+            for (let j = 0; j < table.rows[i].cells.length; j++) {
+                if (snackCollObj[i * table.rows[0].cells.length + j] === undefined) break
+                else {
+                    console.log(i * table.rows[0].cells.length + j)
+                    console.log(table.rows[i].cells[j])
+                    table.rows[i].cells[j].textContent = snackCollObj[i * table.rows[0].cells.length + j].name    
+                }
+            }
+        }
+    })
 }
 
-// this function is called when the money tendered button is clicked
-// it updates the tenderedMoney object
-function handleMoneyTenderButton (button) {
-    tenderedMoney[button.value]++
-    updateAmtTenderedElement ()
-}
-
-// this object contains the information of what money has been deposited into the machine
+// this object represents money that has been inserted into the machine
 const tenderedMoney = {
-    fivers: 0,
-    bucks: 0,
-    quarters: 0,
-    dimes: 0,
-    nickels: 0,
-    total: function () {
-        return this.fivers * 5 + this.bucks + this.quarters * 0.25 + this.dimes * 0.1 + this.nickels * 0.05
-    },
-    returnMoney: function () {
-        this.fivers = 0
-        this.bucks = 0
-        this.quarters = 0
-        this.dimes = 0
-        this.nickels = 0
-        updateAmtTenderedElement ()
-    }
+    fivers: {quantity: 0, value: 5},
+    bucks: {quantity: 0, value: 1},
+    quarters: {quantity: 0, value: 0.25},
+    dimes: {quantity: 0, value: 0.1},
+    nickels: {quantity: 0, value: 0.05},
 }
 
-// this function will update the HTML element which displays the amount tentered
-// this will need to be called after money is tendered, and after change is returned
-function updateAmtTenderedElement () {
-    document.getElementById('amt-tendered').children[1].textContent = `$${tenderedMoney.total().toFixed(2)}`
+const eventListeners = () => {
+    // insert money buttons
+    for (let button of document.getElementById('add-money').children) {
+        button.addEventListener('click', () => {
+            handleMoneyInstertion(button.value)
+            updateAmtTenderedElement()
+        })
+    }
+
+    // return money button
+    document.getElementById('amt-tendered').children[1].addEventListener('click', () => {
+        handleReturn()
+        updateAmtTenderedElement()
+    })
 }
+
+// this function adds money to the tenderedMoney object
+const handleMoneyInstertion = (denomination) => tenderedMoney[denomination].quantity++
+
+// this function returns the total value of the tenderedMoney
+const totalTendered = () => Object.values(tenderedMoney).reduce((total, denomination) => total + denomination.quantity * denomination.value, 0)
+
+// this function resets the tenderedMoney quantities to zero for all denominations
+const handleReturn = () => Object.values(tenderedMoney).map(denomination => denomination.quantity = 0)
+
+// this function updates the amount tendered HTML element
+const updateAmtTenderedElement = () => document.getElementById('amt-tendered').children[0].textContent = `$${totalTendered().toFixed(2)}`

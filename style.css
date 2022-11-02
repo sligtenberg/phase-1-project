@@ -1,5 +1,10 @@
+#role-toggle {
+  margin: 10px;
+}
+
 #snack-display {
     border: 1px solid;
+    margin: 10px;
   }  
 td {
   border: 1px solid;
@@ -17,6 +22,6 @@ input[type=text] {
   width: 20px;
 }
 
-#amt-tendered, button {
-  text-align: left;
+form {
+  margin: 20px;
 }
