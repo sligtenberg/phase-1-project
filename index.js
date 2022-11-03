@@ -4,15 +4,15 @@ document.addEventListener('DOMContentLoaded', () => {
     // listen for insert money buttons event
     for (let button of document.getElementById('add-money').children) {
         button.addEventListener('click', () => {
-            handleMoneyInstertion(button.value)
-            updateAmtTenderedElement()
+            tenderedMoney.addMoney(button.value)
+            document.getElementById('amt-tendered').textContent = `$${tenderedMoney.total().toFixed(2)}`
         })
     }
 
     // listen for return money button event
-    document.getElementById('amt-tendered').children[1].addEventListener('click', () => {
-        handleReturn()
-        updateAmtTenderedElement()
+    document.getElementById('return-money').addEventListener('click', () => {
+        tenderedMoney.returnMoney()
+        document.getElementById('amt-tendered').textContent = `$${tenderedMoney.total().toFixed(2)}`
     })
 })
 
@@ -48,7 +48,7 @@ const populateSnacks = () => {
 
 // this function will handle when a user tries to order a snack
 const handleSnackOrder = (snack) => snack.quantity === 0 ?
-    alert(`Stevo's Snack Sampler is out of ${snack.name}!`) : totalTendered() < snack.price ?
+    alert(`Stevo's Snack Sampler is out of ${snack.name}!`) : tenderedMoney.total() < snack.price ?
         alert(`You need to enter more money to purchase ${snack.name}!`) : snackDelivery(snack)
 
 // this function executes when a snack is to be delivered to the customer
@@ -67,21 +67,20 @@ const snackDelivery = (snack) => {
 
 // this object represents money that has been inserted into the machine
 const tenderedMoney = {
-    fivers: {quantity: 0, value: 5},
-    bucks: {quantity: 0, value: 1},
-    quarters: {quantity: 0, value: 0.25},
-    dimes: {quantity: 0, value: 0.1},
-    nickels: {quantity: 0, value: 0.05},
+    money: {
+        fivers: {quantity: 0, value: 5},
+        bucks: {quantity: 0, value: 1},
+        quarters: {quantity: 0, value: 0.25},
+        dimes: {quantity: 0, value: 0.1},
+        nickels: {quantity: 0, value: 0.05},
+    },
+    total: function () {
+        return Object.values(this.money).reduce((total, denomination) => total + denomination.quantity * denomination.value, 0)
+    },
+    returnMoney: function () {
+        Object.values(this.money).map(denomination => denomination.quantity = 0)
+    },
+    addMoney: function (denomination) {
+        this.money[denomination].quantity++
+    }
 }
-
-// this function adds money to the tenderedMoney object
-const handleMoneyInstertion = (denomination) => tenderedMoney[denomination].quantity++
-
-// this function returns the total value of the tenderedMoney
-const totalTendered = () => Object.values(tenderedMoney).reduce((total, denomination) => total + denomination.quantity * denomination.value, 0)
-
-// this function resets the tenderedMoney quantities to zero for all denominations
-const handleReturn = () => Object.values(tenderedMoney).map(denomination => denomination.quantity = 0)
-
-// this function updates the amount tendered HTML element
-const updateAmtTenderedElement = () => document.getElementById('amt-tendered').children[0].textContent = `$${totalTendered().toFixed(2)}`
