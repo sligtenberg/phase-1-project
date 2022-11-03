@@ -1,20 +1,68 @@
 document.addEventListener('DOMContentLoaded', () => {
     populateSnacks();
 
-    // listen for insert money buttons event
+    // listen for insert money button events
     for (let button of document.getElementById('add-money').children) {
         button.addEventListener('click', () => {
             tenderedMoney.addMoney(button.value)
-            document.getElementById('amt-tendered').textContent = `$${tenderedMoney.total().toFixed(2)}`
+            updateAmtTendered(tenderedMoney.total())
+            updateDisplayCase()
         })
     }
 
     // listen for return money button event
     document.getElementById('return-money').addEventListener('click', () => {
-        tenderedMoney.returnMoney()
-        document.getElementById('amt-tendered').textContent = `$${tenderedMoney.total().toFixed(2)}`
+        updateDisplayCase(moneyBoxToString(tenderedMoney.money))
+        tenderedMoney.reset()
+        updateAmtTendered(tenderedMoney.total())
     })
 })
+
+// this object represents money that has been inserted into the machine
+const tenderedMoney = {
+    money: [
+        {name: '$5.00 bill', quantity: 0, value: 5},
+        {name: '$1.00 bill', quantity: 0, value: 1},
+        {name: 'quarter',    quantity: 0, value: 0.25},
+        {name: 'dime',      quantity: 0, value: 0.1},
+        {name: 'nickel',     quantity: 0, value: 0.05},
+    ],
+    addMoney: function (denomination) {
+        this.money[denomination].quantity++
+    },
+    total: function () {
+        return this.money.reduce((total, denomination) => total + denomination.quantity * denomination.value, 0)
+    },
+    // this function is called when the return button is pushed
+    // it does two things: 1) send a message describing the return, and 2) reset the money array to be empty
+    reset: function () {
+        this.money.map(denomination => denomination.quantity = 0) // set money box quantities to zero
+    }
+}
+
+// this function takes a money array and returns a string describing it
+const moneyBoxToString = (moneyArray) => {
+    const returnSentence = []
+    for (let denomination of moneyArray) {
+        switch (denomination.quantity) {
+            case 0: break
+            case 1: {
+                returnSentence.push(` ${denomination.quantity} ${denomination.name}`)
+                break
+            }
+            default: returnSentence.push(` ${denomination.quantity} ${denomination.name}s`)
+        }
+    }
+    return returnSentence
+}
+
+// this function updates the HTML element to reflect the amount of money the user has entered
+// should be called: 1) when money is entered, 2) when something is purshased, 3) when money is returned
+const updateAmtTendered = (amount) => document.getElementById('amt-tendered').textContent = `$${amount.toFixed(2)}`
+
+// this function writes to the display case
+// it will be called for three cases: 1) money sent to user, 2) snack sent to user, 3) error message sent to user
+const updateDisplayCase = (content) => document.getElementById('dispenser').textContent = content
 
 // this function populates the snacks from the server
 const populateSnacks = () => {
@@ -48,12 +96,13 @@ const populateSnacks = () => {
 
 // this function will handle when a user tries to order a snack
 const handleSnackOrder = (snack) => snack.quantity === 0 ?
-    alert(`Stevo's Snack Sampler is out of ${snack.name}!`) : tenderedMoney.total() < snack.price ?
-        alert(`You need to enter more money to purchase ${snack.name}!`) : snackDelivery(snack)
+    updateDisplayCase(`Stevo's Snack Sampler is out of ${snack.name}!`) : tenderedMoney.total() < snack.price ?
+        updateDisplayCase(`You need to enter more money to purchase ${snack.name}!`) : snackDelivery(snack)
 
-// this function executes when a snack is to be delivered to the customer
+// this function executes when a snack should be delivered to the customer
 const snackDelivery = (snack) => {
     snack.quantity--
+    updateDisplayCase(`${snack.name}!`)
     fetch(`http://localhost:3000/snacks/${snack.id}`, {
         method: 'PATCH',
         headers: {
@@ -63,24 +112,4 @@ const snackDelivery = (snack) => {
     })
     .then(res => res.json)
     .then(populateSnacks())
-}
-
-// this object represents money that has been inserted into the machine
-const tenderedMoney = {
-    money: {
-        fivers: {quantity: 0, value: 5},
-        bucks: {quantity: 0, value: 1},
-        quarters: {quantity: 0, value: 0.25},
-        dimes: {quantity: 0, value: 0.1},
-        nickels: {quantity: 0, value: 0.05},
-    },
-    total: function () {
-        return Object.values(this.money).reduce((total, denomination) => total + denomination.quantity * denomination.value, 0)
-    },
-    returnMoney: function () {
-        Object.values(this.money).map(denomination => denomination.quantity = 0)
-    },
-    addMoney: function (denomination) {
-        this.money[denomination].quantity++
-    }
 }

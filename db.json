@@ -28,37 +28,37 @@
       "id": 5,
       "name": "Chips",
       "price": 1.5,
-      "quantity": 8
+      "quantity": 5
     }
   ],
   "cash": [
     {
       "id": 1,
-      "denomination": "fivers",
+      "name": "$5.00 bill",
       "value": 5,
       "quantity": 100
     },
     {
       "id": 2,
-      "denomination": "bucks",
+      "name": "$1.00 bill",
       "value": 1,
       "quantity": 100
     },
     {
       "id": 3,
-      "denomination": "quarters",
+      "name": "quarter",
       "value": 0.25,
       "quantity": 500
     },
     {
       "id": 4,
-      "denomination": "dimes",
+      "name": "dime",
       "value": 0.1,
       "quantity": 500
     },
     {
       "id": 5,
-      "denomination": "nickels",
+      "name": "nickel",
       "value": 0.05,
       "quantity": 500
     }
