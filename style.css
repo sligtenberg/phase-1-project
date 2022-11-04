@@ -5,13 +5,11 @@ input {background-color: rgb(226, 230, 165)}
 #role-toggle {
   margin: 10px;
 }
-
 #snack-display {
     border: 1px solid;
     margin: 10px;
   }
-
-td {
+#snack-display td {
   border: 1px solid;
   height: 60px;
   width: 90px;
@@ -24,6 +22,14 @@ td {
   margin: 25px;
   background-color: rgb(226, 230, 165);
 }
+#cash-drawer {
+  border: 1px solid;
+  margin: 15px;
+}
+#cash-drawer td {
+  border: 1px solid;
+  width: 110px;
+}
 
 input[type=text] {width: 20px;}
 
@@ -34,3 +40,4 @@ form {margin: 10px;}
   width: 80px;
 }
 #add-money {margin-bottom: 10px;}
+#return-money {margin-left: 10px;}

@@ -16,6 +16,9 @@ document.addEventListener('DOMContentLoaded', () => {
         tenderedMoney.reset()
         updateAmtTendered(tenderedMoney.total())
     })
+
+    // listen for radio button change
+    document.getElementById('role-toggle')
 })
 
 // this object represents money that has been inserted into the machine
