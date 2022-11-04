@@ -10,7 +10,7 @@
       "id": 2,
       "name": "Candy",
       "price": 2,
-      "quantity": 1
+      "quantity": 5
     },
     {
       "id": 3,
@@ -22,7 +22,7 @@
       "id": 4,
       "name": "Gummies",
       "price": 2.5,
-      "quantity": 10
+      "quantity": 9
     },
     {
       "id": 5,
@@ -35,32 +35,32 @@
     {
       "id": 1,
       "name": "$5.00 bill",
-      "value": 5,
-      "quantity": 100
+      "quantity": 2,
+      "value": 5
     },
     {
       "id": 2,
       "name": "$1.00 bill",
-      "value": 1,
-      "quantity": 100
+      "quantity": 9,
+      "value": 1
     },
     {
       "id": 3,
       "name": "quarter",
-      "value": 0.25,
-      "quantity": 500
+      "quantity": 10,
+      "value": 0.25
     },
     {
       "id": 4,
       "name": "dime",
-      "value": 0.1,
-      "quantity": 500
+      "quantity": 500,
+      "value": 0.1
     },
     {
       "id": 5,
       "name": "nickel",
-      "value": 0.05,
-      "quantity": 500
+      "quantity": 500,
+      "value": 0.05
     }
   ]
 }

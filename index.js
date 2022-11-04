@@ -97,19 +97,52 @@ const populateSnacks = () => {
 // this function will handle when a user tries to order a snack
 const handleSnackOrder = (snack) => snack.quantity === 0 ?
     updateDisplayCase(`Stevo's Snack Sampler is out of ${snack.name}!`) : tenderedMoney.total() < snack.price ?
-        updateDisplayCase(`You need to enter more money to purchase ${snack.name}!`) : snackDelivery(snack)
+        updateDisplayCase(`You need to enter more money to purchase ${snack.name}!`) : makeChange(snack.price) === false ?
+            updateDisplayCase("Stevo's Snack Sampler can't make change for this order") : snackDelivery(snack)
 
+// this function take the cost of the snack and tries to make change
+// false if it cannot make change
+// if it can make change, updates the tendered money object with the change, and the amt tendered HTML element, returns true
+const makeChange = (snackValue) => {
+    fetch('http://localhost:3000/cash')
+    .then(res => res.json())
+    .then(availableMoney => {
+        let changeNeeded = tenderedMoney.total() - snackValue
+        const potentialChange = [0, 0, 0, 0, 0]
+        for (let i = 0; i < availableMoney.length; i++) {
+            while (changeNeeded >= tenderedMoney.money[i].value && availableMoney[i].quantity + tenderedMoney.money[i].quantity > 0) {
+                potentialChange[i]++
+                changeNeeded -= tenderedMoney.money[i].value
+            }
+        }
+        if (changeNeeded === 0) {
+            for (let i = 0; i < availableMoney.length; i++) {
+                availableMoney[i].quantity += tenderedMoney.money[i].quantity -= potentialChange[i]
+                tenderedMoney.money[i].quantity = potentialChange[i]
+                fetch(`http://localhost:3000/cash/${i+1}`, {
+                    method: 'PATCH',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify(availableMoney[i])
+                })    
+            }
+            updateAmtTendered(tenderedMoney.total())
+            return true
+        }
+        else return false
+    })
+}
+
+// NEED TO TAKE MONEY!
 // this function executes when a snack should be delivered to the customer
 const snackDelivery = (snack) => {
-    snack.quantity--
-    updateDisplayCase(`${snack.name}!`)
-    fetch(`http://localhost:3000/snacks/${snack.id}`, {
-        method: 'PATCH',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(snack)
-    })
-    .then(res => res.json)
-    .then(populateSnacks())
+    console.log(snack.name)
+    // snack.quantity--
+    // updateDisplayCase(`${snack.name}!`)
+    // fetch(`http://localhost:3000/snacks/${snack.id}`, {
+    //     method: 'PATCH',
+    //     headers: {'Content-Type': 'application/json'},
+    //     body: JSON.stringify(snack)
+    // })
+    // .then(res => res.json)
+    // .then(populateSnacks())
 }
