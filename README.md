@@ -8,7 +8,7 @@ Use the radio toggle at the top of the page to switch between customer mode and 
 
 In customer mode, a user can insert money in denominations of $5.00 bills, $1.00 bills, quarters, dimes, and nickels, by pressing buttons. The machine should display a live reading of the total value of the money which has been tendered.
 
-The return money button resets the amount tendered to zero.
+The return money button resets the amount tendered to zero and send the money that was returned to the dispenser.
 
 Once the amount tendered equals or exceeds the cost of a snack, the snack may be purchased, resulting in the snack being displayed in the dispenser, the machine inventory decreasing, and the amount tendered reset to zero.
 

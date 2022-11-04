@@ -12,7 +12,8 @@
             <label>Customer</label>
             <input type="radio" value="maintenance">
             <label>Maintenance</label>
-          </div>
+        </div>
+        <h4>Display</h4>
         <table id="snack-display">
             <tr>
                 <td></td>
@@ -47,13 +48,13 @@
             <div>Amount tendered: <span id="amt-tendered">$0.00</span><button type="button" id="return-money">Return money</button>
             </div>
           </div>
-          
+          <h4>Dispenser</h4>
           <div id="dispenser">
           </div>
-          <div id="maintenance-controls">
-            <h4>Maintenance Controls</h4>
+          <div id="cash-drawer">
+            <h4>Cash Drawer</h4>
             <button id="auto-reset" type="button">Auto reset</button><br>
-            <form id="cash-drawer">Cash Drawer<br>
+            <form id="cash-drawer">
                 <label for="fivers">$5.00 bills: </label><input type="text" placeholder="0"><br>
                 <label for="bucks">$1.00 bills: </label><input type="text" placeholder="0"><br>
                 <label for="quarters">Quarters: </label><input type="text" placeholder="0"><br>
@@ -61,7 +62,6 @@
                 <label for="nickels">Nickels: </label><input type="text" placeholder="0">
                 <input type="submit" value="Submit">
             </form>
-            <h4>Service Report</h4>
         </div>
         <script src='index.js'></script>
     </body>

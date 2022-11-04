@@ -1,3 +1,7 @@
+body {background-color: rgb(175, 255, 178);}
+button {background-color: rgb(226, 230, 165)}
+input {background-color: rgb(226, 230, 165)}
+
 #role-toggle {
   margin: 10px;
 }
@@ -5,11 +9,12 @@
 #snack-display {
     border: 1px solid;
     margin: 10px;
-  }  
+  }
+
 td {
   border: 1px solid;
-  height: 100px;
-  width: 100px;
+  height: 60px;
+  width: 90px;
   text-align: center;
 }
 #dispenser {
@@ -17,17 +22,15 @@ td {
   width: 200px;
   border: 1px solid;
   margin: 25px;
+  background-color: rgb(226, 230, 165);
 }
 
-input[type=text] {
-  width: 20px;
-}
+input[type=text] {width: 20px;}
 
-form {
-  margin: 20px;
-}
+form {margin: 10px;}
 
 .snack-btn {
-  height: 80px;
+  height: 50px;
   width: 80px;
 }
+#add-money {margin-bottom: 10px;}
