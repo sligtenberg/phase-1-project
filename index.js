@@ -18,10 +18,31 @@ document.addEventListener('DOMContentLoaded', () => {
     })
 
     // listen for radio button change
-    document.getElementById('role-toggle')
+    document.getElementById('role-toggle').addEventListener('click', () => applyRole())
 
-    document.getElementsByClassName('.maintenance').disabled = true
 })
+
+// this function switches us to the correct mode
+const applyRole = () => {
+    const custBtns = document.getElementsByClassName('customer')
+    const maintBtns = document.getElementsByClassName('maintenance')
+    if (document.getElementById('role-toggle').children[0].checked) {
+        for (let button of maintBtns) {
+            button.disabled = true
+        }
+        for (let button of custBtns) {
+            button.disabled = false
+        }
+    }
+    else {
+        for (let button of maintBtns) {
+            button.disabled = false
+        }
+        for (let button of custBtns) {
+            button.disabled = true
+        }
+    }
+}
 
 // this object represents money that has been inserted into the machine
 const tenderedMoney = {
@@ -96,6 +117,7 @@ const populateSnacks = () => {
                 }
             }
         }
+        applyRole()
     })
 }
 
