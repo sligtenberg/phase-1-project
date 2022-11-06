@@ -109,6 +109,7 @@ const populateSnacks = () => {
                             $${currentSnack.price.toFixed(2)}<br>
                             ${currentSnack.quantity} left
                         </button>
+                        <button type="button" class="maintenance">Delete</button>
                     `
                     dispalyWindow.children[0].addEventListener('click', () => handleSnackOrder(currentSnack))
                 } 
