@@ -16,7 +16,7 @@
       "id": 3,
       "name": "Soda",
       "price": 1,
-      "quantity": 6
+      "quantity": 5
     },
     {
       "id": 4,
@@ -59,7 +59,7 @@
     {
       "id": 5,
       "name": "nickel",
-      "quantity": 0,
+      "quantity": 20,
       "value": 0.05
     }
   ]

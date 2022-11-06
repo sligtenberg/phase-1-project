@@ -8,7 +8,7 @@
     <body>
         <h1>Stevo's Snack Sampler</h1>
         <div id="role-toggle">
-            <input type="radio" name="role" value="customer" id="customer">
+            <input type="radio" name="role" value="customer" id="customer" checked>
             <label for="customer">Customer</label>
             <input type="radio" name="role" value="maintenance" id="maintenance">
             <label for="maintenance">Maintenance</label>
@@ -41,13 +41,13 @@
         <div>
             <h4>Click to insert given denomination</h4>
             <div id="add-money">
-                <button type="button" value="0">$5.00 bill</button>
-                <button type="button" value="1">$1.00 bill</button>
-                <button type="button" value="2">Quarter</button>
-                <button type="button" value="3">Dime</button>
-                <button type="button" value="4">Nickel</button>
+                <button type="button" value="0" class="customer">$5.00 bill</button>
+                <button type="button" value="1" class="customer">$1.00 bill</button>
+                <button type="button" value="2" class="customer">Quarter</button>
+                <button type="button" value="3" class="customer">Dime</button>
+                <button type="button" value="4" class="customer">Nickel</button>
             </div>
-            <div>Amount tendered: <span id="amt-tendered">$0.00</span><button type="button" id="return-money">Return money</button>
+            <div>Amount tendered: <span id="amt-tendered">$0.00</span><button type="button" id="return-money" class="customer">Return money</button>
             </div>
         </div>
         <div>
@@ -57,7 +57,7 @@
         </div>
         <div>
             <h4>Cash Drawer</h4>
-            <button id="auto-reset" type="button">Auto reset</button><br>
+            <button id="auto-reset" type="button" class="maintenance">Auto reset</button>
             <table id="cash-drawer">
                 <form>
                     <tr>
@@ -68,29 +68,29 @@
                     <tr>
                         <td>$5.00 bills:</td>
                         <td></td>
-                        <td><input type="text" placeholder="0"></td>
+                        <td><input type="text" placeholder="0" class="maintenance"></td>
                     </tr>
                     <tr>
                         <td>$1.00 bills:</td>
                         <td></td>
-                        <td><input type="text" placeholder="0"></td>
+                        <td><input type="text" placeholder="0" class="maintenance"></td>
                     </tr>
                     <tr>
                         <td>Quarters:</td>
                         <td></td>
-                        <td><input type="text" placeholder="0"></td>
+                        <td><input type="text" placeholder="0" class="maintenance"></td>
                     </tr>
                     <tr>
                         <td>Dimes:</td>
                         <td></td>
-                        <td><input type="text" placeholder="0"></td>
+                        <td><input type="text" placeholder="0" class="maintenance"></td>
                     </tr>
                     <tr>
                         <td>Nickels:</td>
                         <td></td>
-                        <td><input type="text" placeholder="0"></td>
+                        <td><input type="text" placeholder="0" class="maintenance"></td>
                     </tr>
-                    <input type="submit" value="Submit">
+                    <input type="submit" value="Submit" class="maintenance">
                 </form>
             </table>
         </div>

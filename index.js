@@ -19,6 +19,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // listen for radio button change
     document.getElementById('role-toggle')
+
+    document.getElementsByClassName('.maintenance').disabled = true
 })
 
 // this object represents money that has been inserted into the machine
@@ -81,7 +83,7 @@ const populateSnacks = () => {
                 let dispalyWindow = table.rows[i].cells[j]
                 if (currentSnack != undefined) {
                     dispalyWindow.innerHTML = `
-                        <button type="button" class="snack-btn">
+                        <button type="button" class="customer">
                             ${currentSnack.name}<br>
                             $${currentSnack.price.toFixed(2)}<br>
                             ${currentSnack.quantity} left
@@ -90,7 +92,7 @@ const populateSnacks = () => {
                     dispalyWindow.children[0].addEventListener('click', () => handleSnackOrder(currentSnack))
                 } 
                 else {
-                    dispalyWindow.innerHTML = `<button type="button" disabled>Add Snack!</button>`
+                    dispalyWindow.innerHTML = `<button type="button" class="maintenance">Add Snack!</button>`
                 }
             }
         }
