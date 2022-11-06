@@ -11,8 +11,8 @@ input {background-color: rgb(226, 230, 165)}
   }
 #snack-display td {
   border: 1px solid;
-  height: 90px;
-  width: 90px;
+  height: 100px;
+  width: 100px;
   text-align: center;
 }
 #dispenser {
@@ -41,3 +41,5 @@ form {margin: 10px;}
 }
 #add-money {margin-bottom: 10px;}
 #return-money {margin-left: 10px;}
+
+button {margin: 5px;}
