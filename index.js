@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', () => {
     populateSnacks();
 
     // listen for insert money button events
-    for (let button of document.getElementById('add-money').children) {
+    for (let button of document.getElementById('add-money').children[1].children) {
         button.addEventListener('click', () => {
             tenderedMoney.addMoney(button.value)
             updateAmtTendered(tenderedMoney.total())
@@ -18,8 +18,10 @@ document.addEventListener('DOMContentLoaded', () => {
     })
 
     // listen for radio button change
-    document.getElementById('role-toggle').addEventListener('click', () => applyRole())
-
+    document.getElementById('role-toggle').addEventListener('click', () => {
+        applyRole()
+        updateDisplayCase()
+    })
 })
 
 // this function switches us to the correct mode
@@ -33,6 +35,9 @@ const applyRole = () => {
         for (let button of custBtns) {
             button.disabled = false
         }
+        document.getElementById('add-money').style.display = "block"
+        document.getElementById('cash-drawer').style.display = "none"
+        document.getElementById('dispenser').style.display = "block"
     }
     else {
         for (let button of maintBtns) {
@@ -41,6 +46,9 @@ const applyRole = () => {
         for (let button of custBtns) {
             button.disabled = true
         }
+        document.getElementById('add-money').style.display = "none"
+        document.getElementById('cash-drawer').style.display = "block"
+        document.getElementById('dispenser').style.display = "none"
     }
 }
 
@@ -88,7 +96,7 @@ const updateAmtTendered = (amount) => document.getElementById('amt-tendered').te
 
 // this function writes to the display case
 // it will be called for three cases: 1) money sent to user, 2) snack sent to user, 3) error message sent to user
-const updateDisplayCase = (content) => document.getElementById('dispenser').textContent = content
+const updateDisplayCase = (content) => document.getElementById('dispenser').children[1].textContent = content
 
 // this function populates the snacks from the server
 const populateSnacks = () => {

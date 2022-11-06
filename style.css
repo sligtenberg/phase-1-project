@@ -15,14 +15,15 @@ input {background-color: rgb(226, 230, 165)}
   width: 100px;
   text-align: center;
 }
-#dispenser {
+#dispenser div {
   height: 50px;
   width: 200px;
   border: 1px solid;
-  margin: 25px;
+  margin: 15px;
   background-color: rgb(226, 230, 165);
+  padding: 5px;
 }
-#cash-drawer {
+#cash-drawer table {
   border: 1px solid;
   margin: 15px;
 }
@@ -42,4 +43,4 @@ form {margin: 10px;}
 #add-money {margin-bottom: 10px;}
 #return-money {margin-left: 10px;}
 
-button {margin: 5px;}
+button {margin: 2px;}
