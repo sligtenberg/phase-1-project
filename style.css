@@ -44,3 +44,6 @@ form {margin: 10px;}
 #return-money {margin-left: 10px;}
 
 button {margin: 2px;}
+#cash-drawer table input {
+  width: 50px;
+}
