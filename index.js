@@ -167,25 +167,28 @@ const getSnack = (snack) => {
     .then(availableMoney => {
         let changeNeeded = tenderedMoney.total() - snack.price
         const potentialChange = [0, 0, 0, 0, 0]
-        for (let i = 0; i < availableMoney.length; i++) {
-            while (changeNeeded >= tenderedMoney.money[i].value && availableMoney[i].quantity + tenderedMoney.money[i].quantity > 0) {
-                potentialChange[i]++
-                changeNeeded = (changeNeeded - tenderedMoney.money[i].value).toFixed(2)
+        availableMoney.forEach(denomination => {
+            const index = denomination.id - 1
+            while (changeNeeded >= tenderedMoney.money[index].value && denomination.quantity + tenderedMoney.money[index].quantity > 0) {
+                potentialChange[index]++
+                changeNeeded = (changeNeeded - tenderedMoney.money[index].value).toFixed(2)
             }
-        }
+        })
         if (changeNeeded != 0) {
+            // add functionality to try again, but getting around the quarters and dimes problem
             updateDisplayCase(`Stevo's Snack Sampler can't make change for ${snack.name}`)
         }
         else {
-            for (let i = 0; i < availableMoney.length; i++) {
-                availableMoney[i].quantity += tenderedMoney.money[i].quantity -= potentialChange[i]
-                tenderedMoney.money[i].quantity = potentialChange[i]
-                fetch(`http://localhost:3000/cash/${i+1}`, {
+            availableMoney.forEach(denomination => {
+                const index = denomination.id - 1
+                denomination.quantity += tenderedMoney.money[index].quantity -= potentialChange[index]
+                tenderedMoney.money[index].quantity = potentialChange[index]
+                fetch(`http://localhost:3000/cash/${denomination.id}`, {
                     method: 'PATCH',
                     headers: {'Content-Type': 'application/json'},
-                    body: JSON.stringify(availableMoney[i])
+                    body: JSON.stringify(availableMoney[index])
                 })    
-            }
+            })
             updateAmtTendered(tenderedMoney.total())
             snackDelivery(snack)
         }
@@ -194,7 +197,6 @@ const getSnack = (snack) => {
 
 // this function executes when a snack should be delivered to the customer
 const snackDelivery = (snack) => {
-    console.log(snack.name)
     snack.quantity--
     updateDisplayCase(`${snack.name}!`)
     fetch(`http://localhost:3000/snacks/${snack.id}`, {
@@ -202,6 +204,6 @@ const snackDelivery = (snack) => {
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify(snack)
     })
-    .then(res => res.json)
+    .then(res => res.json())
     .then(populateSnacks)
 }
