@@ -1,16 +1,16 @@
-# Stevo's Snack Sampler
+# Implementation
 
-Stevo's Snack Sampler is a vending machine interface, intended to provide a tasteful virtual vending machine experience. The goal is mimic a real-life vending machine for both customer interactions, and maintenance needs.
-
-Use the radio toggle at the top of the page to switch between customer mode and maintenance mode
-
-# Installation
-
-To instal Stevo's Snack Sampler, clone the repository to your local environement. The snack list and cash drawer data is stored in the db.json file. Start a JSON server to access it. using the command:
+To instal Stevo's Snack Sampler, clone the repository to your local environement. The snack list and cash drawer data is stored in the db.json file. Start a JSON server to access it using the command:
 
 $json-server --watch db.json
 
 This will create a server storing the snack data with restful routes at http://localhost:3000/snacks and the cash drawer data at http://localhost:3000/snacks/cash. In another terminal window, open index.html to use the application in a browser.
+
+# Stevo's Snack Sampler Intro
+
+Stevo's Snack Sampler is a vending machine interface, intended to provide a tasteful virtual vending machine experience. The goal is mimic a real-life vending machine for both customer interactions, and maintenance needs.
+
+Use the radio toggle at the top of the page to switch between customer mode and maintenance mode
 
 # Customer mode
 
@@ -30,7 +30,7 @@ After ordering a snack, the customer may choose to enter more money, buy anoter 
 
 In maintenance mode, a user can restock the machine with snacks, restock the machine with money, and remove money that the machine has collected.
 
- - To edit snacks, click the snack in the display.
+ - To edit snacks, click the edit button in the snack display.
  - To add a new snack, click add snack in the display.
  - To add money to the machine, enter the quantity in the appropriet field in the cash drawer. Negative numbers subtract money from the machine.
  - Auto reset adds/subtracts money to set the machine back to a default cash drawer level.
