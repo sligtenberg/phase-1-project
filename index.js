@@ -22,6 +22,12 @@ document.addEventListener('DOMContentLoaded', () => {
         applyRole()
         updateDisplayCase()
     })
+
+    // listen for cash drawer form submit
+    // document.querySelector('submit').addEventListener('submit', (event) => {
+    //     event.preventDefault()
+    //     console.log(event)
+    // })
 })
 
 // this function switches us to the correct mode
@@ -49,6 +55,7 @@ const applyRole = () => {
         document.getElementById('add-money').style.display = "none"
         document.getElementById('cash-drawer').style.display = "block"
         document.getElementById('dispenser').style.display = "none"
+        populateCashDrawer()
     }
 }
 
@@ -97,6 +104,19 @@ const updateAmtTendered = (amount) => document.getElementById('amt-tendered').te
 // this function writes to the display case
 // it will be called for three cases: 1) money sent to user, 2) snack sent to user, 3) error message sent to user
 const updateDisplayCase = (content) => document.getElementById('dispenser').children[1].textContent = content
+
+// this function fetches data from db.json and uses it to populate the cash drawer
+const populateCashDrawer = () => {
+    fetch('http://localhost:3000/cash')
+    .then(response => response.json())
+    .then(cashDrawer => {
+        console.log(cashDrawer)
+        let table = document.getElementById('cash-drawer').children[3].children[1].children
+        for (let i = 0; i < cashDrawer.length; i++) {
+            table[i + 1].children[1].textContent = cashDrawer[i].quantity
+        }
+    })
+}
 
 // this function populates the snacks from the server
 const populateSnacks = () => {
