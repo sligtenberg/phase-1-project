@@ -4,6 +4,14 @@ Stevo's Snack Sampler is a vending machine interface, intended to provide a tast
 
 Use the radio toggle at the top of the page to switch between customer mode and maintenance mode
 
+# Installation
+
+To instal Stevo's Snack Sampler, clone the repository to your local environement. The snack list and cash drawer data is stored in the db.json file. Start a JSON server to access it. using the command:
+
+$json-server --watch db.json
+
+This will create a server storing the snack data with restful routes at http://localhost:3000/snacks and the cash drawer data at http://localhost:3000/snacks/cash. In another terminal window, open index.html to use the application in a browser.
+
 # Customer mode
 
 In customer mode, a user can insert money in denominations of $5.00 bills, $1.00 bills, quarters, dimes, and nickels, by pressing buttons. The machine displays a live reading of the total value of the money which has been tendered.
