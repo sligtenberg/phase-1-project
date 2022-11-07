@@ -2,24 +2,29 @@ body {background-color: rgb(175, 255, 178);}
 button {background-color: rgb(226, 230, 165)}
 input {background-color: rgb(226, 230, 165)}
 
+h4 {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
 #role-toggle {
-  margin: 10px;
+  margin-left: 10px;
 }
 #snack-display {
-    border: 1px solid;
-    margin: 10px;
-  }
+  border: 1px solid;
+  margin-left: 10px;
+}
 #snack-display td {
   border: 1px solid;
-  height: 100px;
-  width: 100px;
+  height: 85px;
+  width: 90px;
   text-align: center;
 }
 #dispenser div {
   height: 50px;
   width: 200px;
   border: 1px solid;
-  margin: 15px;
+  margin-left: 10px;
   background-color: rgb(226, 230, 165);
   padding: 5px;
 }
@@ -40,7 +45,7 @@ form {margin: 10px;}
   height: 50px;
   width: 80px;
 }
-#add-money {margin-bottom: 10px;}
+
 #return-money {margin-left: 10px;}
 
 button {margin: 2px;}

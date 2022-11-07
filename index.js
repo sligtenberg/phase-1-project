@@ -24,10 +24,10 @@ document.addEventListener('DOMContentLoaded', () => {
     })
 
     // listen for cash drawer form submit
-    // document.querySelector('submit').addEventListener('submit', (event) => {
-    //     event.preventDefault()
-    //     console.log(event)
-    // })
+    document.getElementById('cash-drawer-submit').addEventListener('submit', (event) => {
+        event.preventDefault()
+        console.log(event)
+    })
 })
 
 // this function switches us to the correct mode
@@ -110,7 +110,6 @@ const populateCashDrawer = () => {
     fetch('http://localhost:3000/cash')
     .then(response => response.json())
     .then(cashDrawer => {
-        console.log(cashDrawer)
         let table = document.getElementById('cash-drawer').children[3].children[1].children
         for (let i = 0; i < cashDrawer.length; i++) {
             table[i + 1].children[1].textContent = cashDrawer[i].quantity
@@ -204,5 +203,5 @@ const snackDelivery = (snack) => {
         body: JSON.stringify(snack)
     })
     .then(res => res.json)
-    .then(populateSnacks())
+    .then(populateSnacks)
 }
