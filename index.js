@@ -205,12 +205,15 @@ const getSnack = (snack) => {
                 const index = denomination.id - 1
                 denomination.quantity += tenderedMoney.money[index].quantity -= potentialChange[index]
                 tenderedMoney.money[index].quantity = potentialChange[index]
+                console.log('before fetch')
                 fetch(`http://localhost:3000/cash/${denomination.id}`, {
                     method: 'PATCH',
                     headers: {'Content-Type': 'application/json'},
                     body: JSON.stringify(availableMoney[index])
                 })
-                //for (let i = 0; i < 1000000000; i++) {}
+                for (let i = 0; i < 500000000; i++) {
+                }
+                console.log('after fetch')
             })
             updateAmtTendered(tenderedMoney.total())
             snackDelivery(snack)
