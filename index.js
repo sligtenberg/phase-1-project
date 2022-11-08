@@ -6,13 +6,13 @@ document.addEventListener('DOMContentLoaded', () => {
         button.addEventListener('click', () => {
             tenderedMoney.addMoney(button.value)
             updateAmtTendered(tenderedMoney.total())
-            updateDisplayCase()
+            updateDispenser()
         })
     }
 
     // listen for return money button event
     document.getElementById('return-money').addEventListener('click', () => {
-        updateDisplayCase(moneyBoxToString(tenderedMoney.money))
+        updateDispenser(moneyBoxToString(tenderedMoney.money))
         tenderedMoney.reset()
         updateAmtTendered(tenderedMoney.total())
     })
@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // listen for radio button change
     document.getElementById('role-toggle').addEventListener('click', () => {
         applyRole()
-        updateDisplayCase()
+        updateDispenser()
     })
 
     // listen for cash drawer form submit
@@ -65,7 +65,7 @@ const tenderedMoney = {
         {name: '$5.00 bill', quantity: 0, value: 5},
         {name: '$1.00 bill', quantity: 0, value: 1},
         {name: 'quarter',    quantity: 0, value: 0.25},
-        {name: 'dime',      quantity: 0, value: 0.1},
+        {name: 'dime',       quantity: 0, value: 0.1},
         {name: 'nickel',     quantity: 0, value: 0.05},
     ],
     addMoney: function (denomination) {
@@ -103,7 +103,7 @@ const updateAmtTendered = (amount) => document.getElementById('amt-tendered').te
 
 // this function writes to the display case
 // it will be called for three cases: 1) money sent to user, 2) snack sent to user, 3) error message sent to user
-const updateDisplayCase = (content) => document.getElementById('dispenser').children[1].textContent = content
+const updateDispenser = (content) => document.getElementById('dispenser').children[1].textContent = content
 
 // this function fetches data from db.json and uses it to populate the cash drawer
 const populateCashDrawer = () => {
@@ -124,24 +124,17 @@ const populateSnacks = () => {
     .then(snackCollection => {
         let table = document.getElementById('snack-display')
         // iterate through the cells of the display case
-        // add the snacks from the server to the case
+        // simulteneously iterate through the snackCollection
+        // send each snack along with the next table element to the displaySnack function
         for (let i = 0; i < table.rows.length; i++) {
             for (let j = 0; j < table.rows[i].cells.length; j++) {
                 let currentSnack = snackCollection[i * table.rows[0].cells.length + j]
-                let dispalyWindow = table.rows[i].cells[j]
+                let tableElement = table.rows[i].cells[j]
                 if (currentSnack != undefined) {
-                    dispalyWindow.innerHTML = `
-                        <button type="button" class="customer">
-                            ${currentSnack.name}<br>
-                            $${currentSnack.price.toFixed(2)}<br>
-                            ${currentSnack.quantity} left
-                        </button>
-                        <button type="button" class="maintenance">Edit</button>
-                    `
-                    dispalyWindow.children[0].addEventListener('click', () => handleSnackOrder(currentSnack))
+                    displaySnack(currentSnack, tableElement)
                 } 
                 else {
-                    dispalyWindow.innerHTML = `<button type="button" class="maintenance">Add Snack!</button>`
+                    tableElement.innerHTML = `<button type="button" class="maintenance">Add Snack!</button>`
                 }
             }
         }
@@ -149,10 +142,23 @@ const populateSnacks = () => {
     })
 }
 
+// this function takes a snack and a table element, fetches the snack from the server
+const displaySnack = (snack, tableElement) => {
+    tableElement.innerHTML = `
+        <button type="button" class="customer">
+            ${snack.name}<br>
+            $${snack.price.toFixed(2)}<br>
+            ${snack.quantity} left
+        </button>
+        <button type="button" class="maintenance">Edit</button>
+    `
+    tableElement.children[0].addEventListener('click', () => handleSnackOrder(currentSnack))
+}
+
 // this function will handle when a user tries to order a snack
 const handleSnackOrder = (snack) => {
-    if (snack.quantity === 0) updateDisplayCase(`Stevo's Snack Sampler is out of ${snack.name}`)
-    else if (tenderedMoney.total() < snack.price) updateDisplayCase(`You need to enter more money to purchase ${snack.name}`)
+    if (snack.quantity === 0) updateDispenser(`Stevo's Snack Sampler is out of ${snack.name}`)
+    else if (tenderedMoney.total() < snack.price) updateDispenser(`You need to enter more money to purchase ${snack.name}`)
     else getSnack(snack)
 }
 
@@ -170,15 +176,16 @@ const getSnack = (snack) => {
         availableMoney.forEach(denomination => {
             const index = denomination.id - 1
             while (changeNeeded >= tenderedMoney.money[index].value && denomination.quantity + tenderedMoney.money[index].quantity > 0) {
-                potentialChange[index]++
+                potentialChange[index + 1]++
                 changeNeeded = (changeNeeded - tenderedMoney.money[index].value).toFixed(2)
             }
         })
-        if (changeNeeded != 0) {
-            // add functionality to try again, but getting around the quarters and dimes problem
-            updateDisplayCase(`Stevo's Snack Sampler can't make change for ${snack.name}`)
-        }
-        else {
+        // if we can make exact change
+        // add the tendered money to the cash drawer object and then subtract the change needed
+        // put that change back into the tendered money object
+        // send a patch to update the cash drawer with the non-change
+        // update the amount tendered display and deliver the snack
+        if (changeNeeded === 0) {
             availableMoney.forEach(denomination => {
                 const index = denomination.id - 1
                 denomination.quantity += tenderedMoney.money[index].quantity -= potentialChange[index]
@@ -192,13 +199,21 @@ const getSnack = (snack) => {
             updateAmtTendered(tenderedMoney.total())
             snackDelivery(snack)
         }
+        else {
+            // add functionality to try again, but getting around the quarters and dimes problem
+            updateDispenser(`Stevo's Snack Sampler can't make change for ${snack.name}`)
+        }
     })
 }
 
 // this function executes when a snack should be delivered to the customer
+// decrease the quantity of this particular snack
+// send it to the display case
+// send the updated snack back to the server 
+// update the html element
 const snackDelivery = (snack) => {
     snack.quantity--
-    updateDisplayCase(`${snack.name}!`)
+    updateDispenser(`${snack.name}!`)
     fetch(`http://localhost:3000/snacks/${snack.id}`, {
         method: 'PATCH',
         headers: {'Content-Type': 'application/json'},
