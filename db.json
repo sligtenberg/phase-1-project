@@ -4,7 +4,7 @@
       "id": 1,
       "name": "Chips",
       "price": 0.95,
-      "quantity": 12
+      "quantity": 0
     },
     {
       "id": 2,
@@ -16,7 +16,7 @@
       "id": 3,
       "name": "Soda",
       "price": 1,
-      "quantity": 196
+      "quantity": 164
     },
     {
       "id": 4,
@@ -28,20 +28,20 @@
       "id": 5,
       "name": "Crackers",
       "price": 1.5,
-      "quantity": 336
+      "quantity": 322
     }
   ],
   "cash": [
     {
       "id": 1,
       "name": "$5.00 bill",
-      "quantity": 137,
+      "quantity": 162,
       "value": 5
     },
     {
       "id": 2,
       "name": "$1.00 bill",
-      "quantity": 18,
+      "quantity": -3,
       "value": 1
     },
     {

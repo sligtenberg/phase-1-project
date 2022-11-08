@@ -203,7 +203,7 @@ const getSnack = (snack) => {
 
         if (parseInt(changeNeeded) === 0) {
             availableMoney.forEach(denomination => {
-                const sendFetch = () => {
+                //const sendFetch = () => {
                     const index = denomination.id - 1
                     denomination.quantity += tenderedMoney.money[index].quantity -= potentialChange[index]
                     tenderedMoney.money[index].quantity = potentialChange[index]
@@ -221,18 +221,18 @@ const getSnack = (snack) => {
                     // want to update and entire resource in json
                     // console.log('after fetch')
                     // debugger
-                }
-                sendFetch()
+                //}
+                //sendFetch()
                 // async function delayer () {
                 //     await sendFetch()
                 // }
             })
             updateAmtTendered(tenderedMoney.total())
-            async function delivery () {
-                await sendFetch()
-                snackDelivery(snack)
-            }
-            //snackDelivery(snack)
+            // async function delivery () {
+            //     await sendFetch()
+            //     snackDelivery(snack)
+            // }
+            snackDelivery(snack)
         }
         else {
             // add functionality to try again, but getting around the quarters and dimes problem
