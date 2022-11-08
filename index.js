@@ -123,7 +123,6 @@ const getSnacks = () => {
     .then(response => response.json())
     .then(snackCollection => {
         snackCollection.forEach(displaySnack)
-        applyRole()
     })
 }
 
@@ -140,6 +139,7 @@ const displaySnack = (snack) => {
         </button>
         <button type="button" class="maintenance">Edit</button>
     `
+    applyRole()
     tableElement.children[0].addEventListener('click', () => handleSnackOrder(snack))
 }
 
@@ -162,8 +162,11 @@ const getSnack = (snack) => {
         let changeNeeded = tenderedMoney.total() - snack.price
         const potentialChange = [0, 0, 0, 0, 0]
         availableMoney.forEach(denomination => {
+            //debugger
             const index = denomination.id - 1
+            //debugger
             while (changeNeeded >= tenderedMoney.money[index].value && denomination.quantity + tenderedMoney.money[index].quantity > 0) {
+                //debugger
                 potentialChange[index]++
                 changeNeeded = (changeNeeded - tenderedMoney.money[index].value).toFixed(2)
             }
@@ -173,6 +176,30 @@ const getSnack = (snack) => {
         // put that change back into the tendered money object
         // send a patch to update the cash drawer with the non-change
         // update the amount tendered display and deliver the snack
+
+        // if (parseInt(changeNeeded) === 0) {
+        //     console.log(availableMoney)
+        //     const newMoneyArray = availableMoney.map(denomination => {
+        //         const index = denomination.id - 1
+        //         denomination.quantity += tenderedMoney.money[index].quantity -= potentialChange[index]
+        //         tenderedMoney.money[index].quantity = potentialChange[index]
+        //         return denomination
+        //     })
+        //     console.log(newMoneyArray)
+        //     fetch('http://localhost:3000/cash', {
+        //         method: 'DELETE',
+        //         headers: {'Content-Type': 'application/json'},
+        //     })
+
+        //     fetch('http://localhost:3000/cash', {
+        //         method: 'POST',
+        //         headers: {'Content-Type': 'application/json'},
+        //         body: JSON.stringify(newMoneyArray)
+        //     })
+        //     updateAmtTendered(tenderedMoney.total())
+        //     snackDelivery(snack)
+        // }
+
         if (parseInt(changeNeeded) === 0) {
             availableMoney.forEach(denomination => {
                 const index = denomination.id - 1
@@ -182,7 +209,8 @@ const getSnack = (snack) => {
                     method: 'PATCH',
                     headers: {'Content-Type': 'application/json'},
                     body: JSON.stringify(availableMoney[index])
-                })    
+                })
+                //for (let i = 0; i < 1000000000; i++) {}
             })
             updateAmtTendered(tenderedMoney.total())
             snackDelivery(snack)
