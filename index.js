@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-    populateSnacks();
+    getSnacks();
 
     // listen for insert money button events
     for (let button of document.getElementById('add-money').children[1].children) {
@@ -117,33 +117,21 @@ const populateCashDrawer = () => {
     })
 }
 
-// this function populates the snacks from the server
-const populateSnacks = () => {
+// this function gets the snacks from the server
+const getSnacks = () => {
     fetch('http://localhost:3000/snacks')
     .then(response => response.json())
     .then(snackCollection => {
-        let table = document.getElementById('snack-display')
-        // iterate through the cells of the display case
-        // simulteneously iterate through the snackCollection
-        // send each snack along with the next table element to the displaySnack function
-        for (let i = 0; i < table.rows.length; i++) {
-            for (let j = 0; j < table.rows[i].cells.length; j++) {
-                let currentSnack = snackCollection[i * table.rows[0].cells.length + j]
-                let tableElement = table.rows[i].cells[j]
-                if (currentSnack != undefined) {
-                    displaySnack(currentSnack, tableElement)
-                } 
-                else {
-                    tableElement.innerHTML = `<button type="button" class="maintenance">Add Snack!</button>`
-                }
-            }
-        }
+        snackCollection.forEach(displaySnack)
         applyRole()
     })
 }
 
-// this function takes a snack and a table element, fetches the snack from the server
-const displaySnack = (snack, tableElement) => {
+// this function takes a snack and adds it to the proper place in the snack display
+// the proper place is dictated by the snack id
+const displaySnack = (snack) => {
+    const table = document.getElementById('snack-display')
+    let tableElement = table.rows[Math.floor(snack.id / table.rows.length)].cells[(snack.id - 1) % table.rows[0].cells.length]
     tableElement.innerHTML = `
         <button type="button" class="customer">
             ${snack.name}<br>
@@ -152,7 +140,7 @@ const displaySnack = (snack, tableElement) => {
         </button>
         <button type="button" class="maintenance">Edit</button>
     `
-    tableElement.children[0].addEventListener('click', () => handleSnackOrder(currentSnack))
+    tableElement.children[0].addEventListener('click', () => handleSnackOrder(snack))
 }
 
 // this function will handle when a user tries to order a snack
@@ -220,5 +208,5 @@ const snackDelivery = (snack) => {
         body: JSON.stringify(snack)
     })
     .then(res => res.json())
-    .then(populateSnacks)
+    .then(displaySnack(snack))
 }

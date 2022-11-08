@@ -10,7 +10,7 @@
       "id": 2,
       "name": "Candy",
       "price": 2,
-      "quantity": 8
+      "quantity": 6
     },
     {
       "id": 3,
@@ -41,13 +41,13 @@
     {
       "id": 2,
       "name": "$1.00 bill",
-      "quantity": 92,
+      "quantity": 96,
       "value": 1
     },
     {
       "id": 3,
       "name": "quarter",
-      "quantity": 0,
+      "quantity": 10,
       "value": 0.25
     },
     {
