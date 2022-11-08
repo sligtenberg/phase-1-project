@@ -4,7 +4,7 @@ To instal Stevo's Snack Sampler, clone the repository to your local environement
 
 $json-server --watch db.json
 
-This will create a server storing the snack data with restful routes at http://localhost:3000/snacks and the cash drawer data at http://localhost:3000/snacks/cash. In another terminal window, open index.html to use the application in a browser.
+This will create a server storing the snack data at http://localhost:3000/snacks and the cash drawer data at http://localhost:3000/snacks/cash. In another terminal window, open index.html to use the application in a browser.
 
 # Stevo's Snack Sampler Intro
 

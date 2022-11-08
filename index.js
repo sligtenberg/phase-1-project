@@ -161,6 +161,7 @@ const getSnack = (snack) => {
     .then(availableMoney => {
         let changeNeeded = tenderedMoney.total() - snack.price
         const potentialChange = [0, 0, 0, 0, 0]
+        // in the following forEach, we try to make change
         availableMoney.forEach(denomination => {
             //debugger
             const index = denomination.id - 1
@@ -202,21 +203,36 @@ const getSnack = (snack) => {
 
         if (parseInt(changeNeeded) === 0) {
             availableMoney.forEach(denomination => {
-                const index = denomination.id - 1
-                denomination.quantity += tenderedMoney.money[index].quantity -= potentialChange[index]
-                tenderedMoney.money[index].quantity = potentialChange[index]
-                console.log('before fetch')
-                fetch(`http://localhost:3000/cash/${denomination.id}`, {
-                    method: 'PATCH',
-                    headers: {'Content-Type': 'application/json'},
-                    body: JSON.stringify(availableMoney[index])
-                })
-                for (let i = 0; i < 500000000; i++) {
+                const sendFetch = () => {
+                    const index = denomination.id - 1
+                    denomination.quantity += tenderedMoney.money[index].quantity -= potentialChange[index]
+                    tenderedMoney.money[index].quantity = potentialChange[index]
+                    //console.log('before fetch')
+                    fetch(`http://localhost:3000/cash/${denomination.id}`, {
+                        method: 'PATCH',
+                        headers: {'Content-Type': 'application/json'},
+                        body: JSON.stringify(denomination)
+                    })
+                    // .then(res => res.json())
+                    // .then()
+                    // await 
+                    // for (let i = 0; i < 500000000; i++) {}
+                    // await here
+                    // want to update and entire resource in json
+                    // console.log('after fetch')
+                    // debugger
                 }
-                console.log('after fetch')
+                sendFetch()
+                // async function delayer () {
+                //     await sendFetch()
+                // }
             })
             updateAmtTendered(tenderedMoney.total())
-            snackDelivery(snack)
+            async function delivery () {
+                await sendFetch()
+                snackDelivery(snack)
+            }
+            //snackDelivery(snack)
         }
         else {
             // add functionality to try again, but getting around the quarters and dimes problem
