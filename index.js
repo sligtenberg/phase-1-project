@@ -164,7 +164,7 @@ const getSnack = (snack) => {
         availableMoney.forEach(denomination => {
             const index = denomination.id - 1
             while (changeNeeded >= tenderedMoney.money[index].value && denomination.quantity + tenderedMoney.money[index].quantity > 0) {
-                potentialChange[index + 1]++
+                potentialChange[index]++
                 changeNeeded = (changeNeeded - tenderedMoney.money[index].value).toFixed(2)
             }
         })
@@ -173,7 +173,7 @@ const getSnack = (snack) => {
         // put that change back into the tendered money object
         // send a patch to update the cash drawer with the non-change
         // update the amount tendered display and deliver the snack
-        if (changeNeeded === 0) {
+        if (parseInt(changeNeeded) === 0) {
             availableMoney.forEach(denomination => {
                 const index = denomination.id - 1
                 denomination.quantity += tenderedMoney.money[index].quantity -= potentialChange[index]
