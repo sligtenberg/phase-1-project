@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-    getSnacks();
+    purchaseSnacks();
 
     // listen for insert money button events
     for (let button of document.getElementById('add-money').children[1].children) {
@@ -118,7 +118,7 @@ const populateCashDrawer = () => {
 }
 
 // this function gets the snacks from the server
-const getSnacks = () => {
+const purchaseSnacks = () => {
     fetch('http://localhost:3000/snacks')
     .then(response => response.json())
     .then(snackCollection => {
@@ -147,7 +147,7 @@ const displaySnack = (snack) => {
 const handleSnackOrder = (snack) => {
     if (snack.quantity === 0) updateDispenser(`Stevo's Snack Sampler is out of ${snack.name}`)
     else if (tenderedMoney.total() < snack.price) updateDispenser(`You need to enter more money to purchase ${snack.name}`)
-    else getSnack(snack)
+    else purchaseSnack(snack)
 }
 
 // this function takes a snack and tries to make change
@@ -155,85 +155,37 @@ const handleSnackOrder = (snack) => {
 //  - deliver the snack
 //  - update the amount tendered
 // if it cannot make change: alert the user that change cannot be made for thier order
-const getSnack = (snack) => {
+const purchaseSnack = (snack) => {
     fetch('http://localhost:3000/cash')
     .then(res => res.json())
-    .then(availableMoney => {
+    .then(moneyInCashDrawer => {
         let changeNeeded = tenderedMoney.total() - snack.price
         const potentialChange = [0, 0, 0, 0, 0]
-        // in the following forEach, we try to make change
-        availableMoney.forEach(denomination => {
+        for (let i = 0; i < moneyInCashDrawer.length; i++) {
+            moneyInCashDrawer[i].quantity += tenderedMoney.money[i].quantity
             //debugger
-            const index = denomination.id - 1
-            //debugger
-            while (changeNeeded >= tenderedMoney.money[index].value && denomination.quantity + tenderedMoney.money[index].quantity > 0) {
+            while (changeNeeded >= moneyInCashDrawer[i].value && moneyInCashDrawer[i].quantity > 0) {
                 //debugger
-                potentialChange[index]++
-                changeNeeded = (changeNeeded - tenderedMoney.money[index].value).toFixed(2)
+                potentialChange[i]++
+                moneyInCashDrawer[i].quantity--
+                changeNeeded = (changeNeeded - moneyInCashDrawer[i].value).toFixed(2)
+                //debugger
             }
-        })
-        // if we can make exact change
-        // add the tendered money to the cash drawer object and then subtract the change needed
-        // put that change back into the tendered money object
-        // send a patch to update the cash drawer with the non-change
-        // update the amount tendered display and deliver the snack
-
-        // if (parseInt(changeNeeded) === 0) {
-        //     console.log(availableMoney)
-        //     const newMoneyArray = availableMoney.map(denomination => {
-        //         const index = denomination.id - 1
-        //         denomination.quantity += tenderedMoney.money[index].quantity -= potentialChange[index]
-        //         tenderedMoney.money[index].quantity = potentialChange[index]
-        //         return denomination
-        //     })
-        //     console.log(newMoneyArray)
-        //     fetch('http://localhost:3000/cash', {
-        //         method: 'DELETE',
-        //         headers: {'Content-Type': 'application/json'},
-        //     })
-
-        //     fetch('http://localhost:3000/cash', {
-        //         method: 'POST',
-        //         headers: {'Content-Type': 'application/json'},
-        //         body: JSON.stringify(newMoneyArray)
-        //     })
-        //     updateAmtTendered(tenderedMoney.total())
-        //     snackDelivery(snack)
-        // }
-
-        if (parseInt(changeNeeded) === 0) {
-            availableMoney.forEach(denomination => {
-                //const sendFetch = () => {
-                    const index = denomination.id - 1
-                    denomination.quantity += tenderedMoney.money[index].quantity -= potentialChange[index]
-                    tenderedMoney.money[index].quantity = potentialChange[index]
-                    //console.log('before fetch')
-                    fetch(`http://localhost:3000/cash/${denomination.id}`, {
-                        method: 'PATCH',
-                        headers: {'Content-Type': 'application/json'},
-                        body: JSON.stringify(denomination)
-                    })
-                    // .then(res => res.json())
-                    // .then()
-                    // await 
-                    // for (let i = 0; i < 500000000; i++) {}
-                    // await here
-                    // want to update and entire resource in json
-                    // console.log('after fetch')
-                    // debugger
-                //}
-                //sendFetch()
-                // async function delayer () {
-                //     await sendFetch()
-                // }
-            })
+        }
+        if (Number(changeNeeded) === 0) {
+            for (i = 0; i < moneyInCashDrawer.length; i++) {
+                tenderedMoney.money[i].quantity = potentialChange[i]
+                //debugger
+                fetch(`http://localhost:3000/cash/${i+1}`, {
+                    method: 'PATCH',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify(moneyInCashDrawer[i])
+                })
+            }
             updateAmtTendered(tenderedMoney.total())
-            // async function delivery () {
-            //     await sendFetch()
-            //     snackDelivery(snack)
-            // }
             snackDelivery(snack)
         }
+        
         else {
             // add functionality to try again, but getting around the quarters and dimes problem
             updateDispenser(`Stevo's Snack Sampler can't make change for ${snack.name}`)
@@ -247,6 +199,7 @@ const getSnack = (snack) => {
 // send the updated snack back to the server 
 // update the html element
 const snackDelivery = (snack) => {
+    //for (i = 0; i < 1000000000; i++) {}
     snack.quantity--
     updateDispenser(`${snack.name}!`)
     fetch(`http://localhost:3000/snacks/${snack.id}`, {
