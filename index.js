@@ -172,27 +172,101 @@ const purchaseSnack = (snack) => {
                 //debugger
             }
         }
+        //debugger
         if (Number(changeNeeded) === 0) {
-            for (i = 0; i < moneyInCashDrawer.length; i++) {
-                tenderedMoney.money[i].quantity = potentialChange[i]
-                //console.log('moneyInCashDrawer[i]: ', moneyInCashDrawer[i])
-                //console.log('i: ', i)
-                fetch(`http://localhost:3000/cash/${i+1}`, {
+
+            // ********************* original fetch **********************************
+            // this one works if the dummy loop is uncommented
+
+            // for (let i = 0; i < moneyInCashDrawer.length; i++) {
+            //     tenderedMoney.money[i].quantity = potentialChange[i]    
+            //     const response = fetch(`http://localhost:3000/cash/${i+1}`, {
+            //         method: 'PATCH',
+            //         headers: {'Content-Type': 'application/json'},
+            //         body: JSON.stringify(moneyInCashDrawer[i])
+            //     })
+            //     console.log(response)
+            //     for (let i = 0; i < 100000000; i++) {}
+            // }
+
+            // ************************************************************************************
+
+            // ********************* recursive fetch attempt **********************************
+            // this isn't what we want. here, we prvent the error, but we end up skipping 
+            // down to the updates at the end of the function, before coming back and recusively 
+            // building the correct array
+
+            const recursiveSolution = (index) => {
+                //debugger
+                if (index > 4) return 
+                tenderedMoney.money[index].quantity = potentialChange[index]
+                debugger
+                fetch(`http://localhost:3000/cash/${index+1}`, {
                     method: 'PATCH',
                     headers: {'Content-Type': 'application/json'},
-                    body: JSON.stringify(moneyInCashDrawer[i])
+                    body: JSON.stringify(moneyInCashDrawer[index])
+                }).then(() => {
+                    recursiveSolution(index + 1)
                 })
-                for (let i = 0; i < 500000000; i++) {}
             }
+            recursiveSolution(0)
+
+            // ************************************************************************************
+
+            // ********************* fetch async attempt **********************************
+            // I'm not sure why this one fails. I'm not using async and await properly, I believe
+
+            // async function sendFetches () {
+            //     for (let i = 0; i < moneyInCashDrawer.length; i++) {
+            //         tenderedMoney.money[i].quantity = potentialChange[i]    
+            //         //console.log('moneyInCashDrawer[i]: ', moneyInCashDrawer[i])
+            //         //console.log('i: ', i)
+            //         const response = await fetch(`http://localhost:3000/cash/${i+1}`, {
+            //             method: 'PATCH',
+            //             headers: {'Content-Type': 'application/json'},
+            //             body: JSON.stringify(moneyInCashDrawer[i])
+            //         })
+            //         console.log(response)
+            //         //for (let i = 0; i < 100000000; i++) {}
+            //     }
+    
+            // }
+            // sendFetches()
+
+            // ************************************************************************************
+
+
+            // ********************* outsourced fetch async attempt **********************************
+
+            // This solution doesn't work because we are doing the await within the outsourced function,
+            // but we are failing to make the loop wait for the responce
+
+            // for (let i = 0; i < moneyInCashDrawer.length; i++) {
+            //     tenderedMoney.money[i].quantity = potentialChange[i]
+            //     //sendFetch(moneyInCashDrawer[i], (i + 1))
+            // }
+            debugger
             updateAmtTendered(tenderedMoney.total())
+            debugger
             snackDelivery(snack)
         }
+
+        // ************************************************************************************
         
         else {
             // add functionality to try again, but getting around the quarters and dimes problem
             updateDispenser(`Stevo's Snack Sampler can't make change for ${snack.name}`)
         }
     })
+}
+
+async function sendFetch (denomination, id) {
+    const response = await fetch(`http://localhost:3000/cash/${id}`, {
+        method: 'PATCH',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(denomination)
+    })
+    console.log(response)
 }
 
 // this function executes when a snack should be delivered to the customer
