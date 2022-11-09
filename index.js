@@ -175,12 +175,14 @@ const purchaseSnack = (snack) => {
         if (Number(changeNeeded) === 0) {
             for (i = 0; i < moneyInCashDrawer.length; i++) {
                 tenderedMoney.money[i].quantity = potentialChange[i]
-                //debugger
+                //console.log('moneyInCashDrawer[i]: ', moneyInCashDrawer[i])
+                //console.log('i: ', i)
                 fetch(`http://localhost:3000/cash/${i+1}`, {
                     method: 'PATCH',
                     headers: {'Content-Type': 'application/json'},
                     body: JSON.stringify(moneyInCashDrawer[i])
                 })
+                for (let i = 0; i < 500000000; i++) {}
             }
             updateAmtTendered(tenderedMoney.total())
             snackDelivery(snack)
