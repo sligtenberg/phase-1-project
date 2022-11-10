@@ -175,18 +175,54 @@ const purchaseSnack = (snack) => {
         //debugger
         if (Number(changeNeeded) === 0) {
 
+            // update the tenderedMoney object
+            for (let i = 0; i < potentialChange.length; i++) {
+                tenderedMoney.money[i].quantity = potentialChange[i]
+            }
+
+
+            Promise.all([
+                fetch('http://localhost:3000/cash/1', {
+                    method: 'PATCH',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify(moneyInCashDrawer[0])
+                }),
+                fetch('http://localhost:3000/cash/2', {
+                    method: 'PATCH',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify(moneyInCashDrawer[1])
+                }),
+                fetch('http://localhost:3000/cash/3', {
+                    method: 'PATCH',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify(moneyInCashDrawer[2])
+                }),
+                fetch('http://localhost:3000/cash/4', {
+                    method: 'PATCH',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify(moneyInCashDrawer[3])
+                }),
+                fetch('http://localhost:3000/cash/5', {
+                    method: 'PATCH',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify(moneyInCashDrawer[4])
+                }).then(snackDelivery(snack))
+            ])
+            // send the new moneyInCashDrawer back to the server
+            //await sendMoneyInCashDrawer(moneyInCashDrawer)
+
             // ********************* original fetch **********************************
             // this one works if the dummy loop is uncommented
 
             // for (let i = 0; i < moneyInCashDrawer.length; i++) {
-            //     tenderedMoney.money[i].quantity = potentialChange[i]    
-            //     const response = fetch(`http://localhost:3000/cash/${i+1}`, {
+            //     //tenderedMoney.money[i].quantity = potentialChange[i]    
+            //     const response = await fetch(`http://localhost:3000/cash/${i+1}`, {
             //         method: 'PATCH',
             //         headers: {'Content-Type': 'application/json'},
             //         body: JSON.stringify(moneyInCashDrawer[i])
             //     })
+            //     //for (let i = 0; i < 100000000; i++) {}
             //     console.log(response)
-            //     for (let i = 0; i < 100000000; i++) {}
             // }
 
             // ************************************************************************************
@@ -194,22 +230,26 @@ const purchaseSnack = (snack) => {
             // ********************* recursive fetch attempt **********************************
             // this isn't what we want. here, we prvent the error, but we end up skipping 
             // down to the updates at the end of the function, before coming back and recusively 
-            // building the correct array
+            // building the correct change array
 
-            const recursiveSolution = (index) => {
-                //debugger
-                if (index > 4) return 
-                tenderedMoney.money[index].quantity = potentialChange[index]
-                debugger
-                fetch(`http://localhost:3000/cash/${index+1}`, {
-                    method: 'PATCH',
-                    headers: {'Content-Type': 'application/json'},
-                    body: JSON.stringify(moneyInCashDrawer[index])
-                }).then(() => {
-                    recursiveSolution(index + 1)
-                })
-            }
-            recursiveSolution(0)
+            // const recursiveSolution = (index) => {
+            //     //debugger
+            //     if (index > 4) {
+            //         updateAmtTendered(tenderedMoney.total())
+            //         snackDelivery(snack)
+            //         return
+            //     }
+            //     //tenderedMoney.money[index].quantity = potentialChange[index]
+            //     //debugger
+            //     fetch(`http://localhost:3000/cash/${index+1}`, {
+            //         method: 'PATCH',
+            //         headers: {'Content-Type': 'application/json'},
+            //         body: JSON.stringify(moneyInCashDrawer[index])
+            //     }).then(() => {
+            //         recursiveSolution(index + 1)
+            //     })
+            // }
+            // recursiveSolution(0)
 
             // ************************************************************************************
 
@@ -245,10 +285,12 @@ const purchaseSnack = (snack) => {
             //     tenderedMoney.money[i].quantity = potentialChange[i]
             //     //sendFetch(moneyInCashDrawer[i], (i + 1))
             // }
-            debugger
+
+
+            //debugger
             updateAmtTendered(tenderedMoney.total())
-            debugger
-            snackDelivery(snack)
+            //debugger
+            //snackDelivery(snack)
         }
 
         // ************************************************************************************
@@ -260,6 +302,18 @@ const purchaseSnack = (snack) => {
     })
 }
 
+// fails
+async function sendMoneyInCashDrawer(moneyInCashDrawer) {
+    for (let i = 0; i < moneyInCashDrawer.length; i++) {
+        await fetch(`http://localhost:3000/cash/${i+1}`, {
+            method: 'PATCH',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify(moneyInCashDrawer[i])
+        })
+    }
+}
+
+// fails
 async function sendFetch (denomination, id) {
     const response = await fetch(`http://localhost:3000/cash/${id}`, {
         method: 'PATCH',

@@ -4,7 +4,7 @@
       "id": 1,
       "name": "Chips",
       "price": 0.95,
-      "quantity": 297
+      "quantity": 180
     },
     {
       "id": 2,
@@ -35,31 +35,31 @@
     {
       "id": 1,
       "name": "$5.00 bill",
-      "quantity": 280,
+      "quantity": 310,
       "value": 5
     },
     {
       "id": 2,
       "name": "$1.00 bill",
-      "quantity": 7,
+      "quantity": 42,
       "value": 1
     },
     {
       "id": 3,
       "name": "quarter",
-      "quantity": 39,
+      "quantity": 46,
       "value": 0.25
     },
     {
       "id": 4,
       "name": "dime",
-      "quantity": 13,
+      "quantity": 18,
       "value": 0.1
     },
     {
       "id": 5,
       "name": "nickel",
-      "quantity": 33,
+      "quantity": 27,
       "value": 0.05
     }
   ]
