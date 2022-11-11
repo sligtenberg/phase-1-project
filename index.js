@@ -23,12 +23,40 @@ document.addEventListener('DOMContentLoaded', () => {
         updateDispenser()
     })
 
-    // listen for cash drawer form submit
+    //listen for cash drawer form submit
     document.getElementById('cash-drawer-submit').addEventListener('submit', (event) => {
         event.preventDefault()
-        console.log(event)
+        addMoneyToMachine(event.target)
     })
+
+    // listen for auto reset
+    document.getElementById('auto-reset').addEventListener('click', autoReset)
 })
+
+// this is the default amount of change that the maintenance person should leave in the machine
+const defaultCashDrawer = [0, 50, 200, 500, 500]
+
+// this function resets the cash in the machine to a default level
+const autoReset = () => {
+    let tblRows = document.getElementById('cash-drawer').children[3].children[1].children
+    for (let i = 0; i < defaultCashDrawer.length; i++) {
+        tblRows[i+1].children[2].children[0].value = defaultCashDrawer[i] - tblRows[i+1].children[1].textContent
+    }
+}
+
+// this function handles the maintenance action of adding money to the machine
+const addMoneyToMachine = (submittedMoney) => {
+    fetch('http://localhost:3000/cash')
+    .then(res => res.json())
+    .then(moneyInCashDrawer => {
+        for (let i = 0; i < moneyInCashDrawer.length; i++) {
+            if (submittedMoney[i + 1].value === '') submittedMoney[i + 1].value = 0
+            moneyInCashDrawer[i].quantity += Number(submittedMoney[i + 1].value)
+            document.getElementById('cash-drawer').children[3].children[1].children[i + 1].children[1].textContent = moneyInCashDrawer[i].quantity
+        }
+        sendMoneyInCashDrawer(moneyInCashDrawer)
+    })
+}
 
 // this function switches us to the correct mode
 const applyRole = () => {
@@ -158,7 +186,7 @@ const handleSnackOrder = (snack) => {
 const purchaseSnack = async (snack) => {
     fetch('http://localhost:3000/cash')
     .then(res => res.json())
-    .then(async moneyInCashDrawer => {
+    .then(moneyInCashDrawer => {
         let changeNeeded = tenderedMoney.total() - snack.price
         const potentialChange = [0, 0, 0, 0, 0]
         for (let i = 0; i < moneyInCashDrawer.length; i++) {
@@ -176,9 +204,9 @@ const purchaseSnack = async (snack) => {
         if (Number(changeNeeded) === 0) {
 
             // update the tenderedMoney object - this is only necessary with some of the fetch versions below
-            // for (let i = 0; i < potentialChange.length; i++) {
-            //     tenderedMoney.money[i].quantity = potentialChange[i]
-            // }
+            for (let i = 0; i < potentialChange.length; i++) {
+                tenderedMoney.money[i].quantity = potentialChange[i]
+            }
 
 /*******************************************************************************************************
  * The code below randomly encounters:
@@ -206,8 +234,7 @@ const purchaseSnack = async (snack) => {
  *  handleSnackOrder @ index.js:150
  *  (anonymous) @ index.js:143
  * 
- * This error occers at random times, approximately once eaver ten times this function runs
- * and appears to be a problem with the JSON server. My best guess at
+ * This error occers at random times and appears to be a problem with the JSON server. My best guess at
  * the cause is a race condition arising due to multiple fetch requests. The error can be solved by adding 
  * a dummy counter:
  * 
@@ -232,17 +259,17 @@ const purchaseSnack = async (snack) => {
             // However, when run with the await statement, the result should be the same, but it
             // is not. The error returns.
 
-            for (let i = 0; i < moneyInCashDrawer.length; i++) {
-                tenderedMoney.money[i].quantity = potentialChange[i]    
-                const response = await fetch(`http://localhost:3000/cash/${i+1}`, {
-                    method: 'PATCH',
-                    headers: {'Content-Type': 'application/json'},
-                    body: JSON.stringify(moneyInCashDrawer[i])
-                })
-                //for (let i = 0; i < 100000000; i++) {}
-                //console.log(response)
-                //console.log(i)
-            }
+            // for (let i = 0; i < moneyInCashDrawer.length; i++) {
+            //     tenderedMoney.money[i].quantity = potentialChange[i]    
+            //     const response = await fetch(`http://localhost:3000/cash/${i+1}`, {
+            //         method: 'PATCH',
+            //         headers: {'Content-Type': 'application/json'},
+            //         body: JSON.stringify(moneyInCashDrawer[i])
+            //     })
+            //     //for (let i = 0; i < 100000000; i++) {}
+            //     //console.log(response)
+            //     //console.log(i)
+            // }
             //console.log(snack)
 
             // ************************ for await fetch design ************************
@@ -391,10 +418,11 @@ const purchaseSnack = async (snack) => {
 
             // for (let i = 0; i < moneyInCashDrawer.length; i++) {
             //     tenderedMoney.money[i].quantity = potentialChange[i]
-            //     //sendFetch(moneyInCashDrawer[i], (i + 1))
+            //     sendFetch(moneyInCashDrawer[i])
+            //     for (let i = 0; i < 100000000; i++) {}
             // }
             // ************************************************************************************
-
+            sendMoneyInCashDrawer(moneyInCashDrawer)
             updateAmtTendered(tenderedMoney.total())
             snackDelivery(snack)
         }
@@ -405,26 +433,28 @@ const purchaseSnack = async (snack) => {
     })
 }
 
+// the following two functions are part of the race condition experimentation 
 // fails
-async function sendMoneyInCashDrawer(moneyInCashDrawer) {
-    for (let i = 0; i < moneyInCashDrawer.length; i++) {
+async function sendMoneyInCashDrawer(moneyToSend) {
+    for (let i = 0; i < moneyToSend.length; i++) {
         await fetch(`http://localhost:3000/cash/${i+1}`, {
             method: 'PATCH',
             headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify(moneyInCashDrawer[i])
+            body: JSON.stringify(moneyToSend[i])
         })
+        for (let i = 0; i < 100000000; i++) {} // dummy loop to delay the fetch requests
     }
 }
 
 // fails
-async function sendFetch (denomination, id) {
-    const response = await fetch(`http://localhost:3000/cash/${id}`, {
-        method: 'PATCH',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify(denomination)
-    })
-    console.log(response)
-}
+// async function sendFetch (denomination) {
+//     console.log(denomination)
+//     await fetch(`http://localhost:3000/cash/${denomination.id}`, {
+//         method: 'PATCH',
+//         headers: {'Content-Type': 'application/json'},
+//         body: JSON.stringify(denomination)
+//     })
+// }
 
 // this function executes when a snack should be delivered to the customer
 // decrease the quantity of this particular snack
