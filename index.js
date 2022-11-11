@@ -31,6 +31,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // listen for auto reset
     document.getElementById('auto-reset').addEventListener('click', autoReset)
+
+    // listen for cancel btn
+    document.getElementById('clear-form').addEventListener('click', () => {
+        document.getElementById('cash-drawer').children[4].children[0].reset()
+    })
 })
 
 // this is the default amount of change that the maintenance person should leave in the machine
@@ -38,7 +43,7 @@ const defaultCashDrawer = [0, 50, 200, 500, 500]
 
 // this function resets the cash in the machine to a default level
 const autoReset = () => {
-    let tblRows = document.getElementById('cash-drawer').children[3].children[1].children
+    let tblRows = document.getElementById('cash-drawer').children[4].children[1].children
     for (let i = 0; i < defaultCashDrawer.length; i++) {
         tblRows[i+1].children[2].children[0].value = defaultCashDrawer[i] - tblRows[i+1].children[1].textContent
     }
@@ -52,9 +57,10 @@ const addMoneyToMachine = (submittedMoney) => {
         for (let i = 0; i < moneyInCashDrawer.length; i++) {
             if (submittedMoney[i + 1].value === '') submittedMoney[i + 1].value = 0
             moneyInCashDrawer[i].quantity += Number(submittedMoney[i + 1].value)
-            document.getElementById('cash-drawer').children[3].children[1].children[i + 1].children[1].textContent = moneyInCashDrawer[i].quantity
+            document.getElementById('cash-drawer').children[4].children[1].children[i + 1].children[1].textContent = moneyInCashDrawer[i].quantity
         }
         sendMoneyInCashDrawer(moneyInCashDrawer)
+        document.getElementById('cash-drawer').children[4].children[0].reset()
     })
 }
 
@@ -138,7 +144,7 @@ const populateCashDrawer = () => {
     fetch('http://localhost:3000/cash')
     .then(response => response.json())
     .then(cashDrawer => {
-        let table = document.getElementById('cash-drawer').children[3].children[1].children
+        let table = document.getElementById('cash-drawer').children[4].children[1].children
         for (let i = 0; i < cashDrawer.length; i++) {
             table[i + 1].children[1].textContent = cashDrawer[i].quantity
         }
