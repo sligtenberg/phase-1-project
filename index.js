@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-    purchaseSnacks();
+    populateSnackDisplay();
 
     // listen for insert money button events
     for (let button of document.getElementById('add-money').children[1].children) {
@@ -75,6 +75,7 @@ const applyRole = () => {
         for (let button of custBtns) {
             button.disabled = false
         }
+
         document.getElementById('add-money').style.display = "block"
         document.getElementById('cash-drawer').style.display = "none"
         document.getElementById('dispenser').style.display = "block"
@@ -135,7 +136,7 @@ const moneyBoxToString = (moneyArray) => {
 // should be called: 1) when money is entered, 2) when something is purshased, 3) when money is returned
 const updateAmtTendered = (amount) => document.getElementById('amt-tendered').textContent = `$${amount.toFixed(2)}`
 
-// this function writes to the display case
+// this function writes to the dispenser
 // it will be called for three cases: 1) money sent to user, 2) snack sent to user, 3) error message sent to user
 const updateDispenser = (content) => document.getElementById('dispenser').children[1].textContent = content
 
@@ -152,7 +153,7 @@ const populateCashDrawer = () => {
 }
 
 // this function gets the snacks from the server
-const purchaseSnacks = () => {
+const populateSnackDisplay = () => {
     fetch('http://localhost:3000/snacks')
     .then(response => response.json())
     .then(snackCollection => {
@@ -164,7 +165,7 @@ const purchaseSnacks = () => {
 // the proper place is dictated by the snack id
 const displaySnack = (snack) => {
     const table = document.getElementById('snack-display')
-    let tableElement = table.rows[Math.floor(snack.id / table.rows.length)].cells[(snack.id - 1) % table.rows[0].cells.length]
+    let tableElement = table.rows[Math.floor((snack.id - 1) / table.rows[0].cells.length)].cells[(snack.id - 1) % table.rows[0].cells.length]
     tableElement.innerHTML = `
         <button type="button" class="customer">
             ${snack.name}<br>

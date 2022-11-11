@@ -29,6 +29,48 @@
       "name": "Crackers",
       "price": 1.5,
       "quantity": 319
+    },
+    {
+      "id": 6,
+      "name": "Popcorn",
+      "price": 0.75,
+      "quantity": 319
+    },
+    {
+      "id": 7,
+      "name": "Pretzels",
+      "price": 1,
+      "quantity": 319
+    },
+    {
+      "id": 8,
+      "name": "Bubble Gum",
+      "price": 0.2,
+      "quantity": 319
+    },
+    {
+      "id": 9,
+      "name": "Bagles",
+      "price": 1.75,
+      "quantity": 319
+    },
+    {
+      "id": 10,
+      "name": "Ramen",
+      "price": 0.5,
+      "quantity": 319
+    },
+    {
+      "id": 11,
+      "name": "Toys",
+      "price": 5,
+      "quantity": 319
+    },
+    {
+      "id": 12,
+      "name": "Soup",
+      "price": 1.75,
+      "quantity": 319
     }
   ],
   "cash": [
