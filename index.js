@@ -24,16 +24,16 @@ document.addEventListener('DOMContentLoaded', () => {
     })
 
     //listen for cash drawer form submit
-    document.getElementById('cash-drawer-submit').addEventListener('submit', (event) => {
+    document.getElementById('cash-drawer').children[4].children[0].addEventListener('submit', (event) => {
         event.preventDefault()
         addMoneyToMachine(event.target)
     })
 
     // listen for auto reset
-    document.getElementById('auto-reset').addEventListener('click', autoReset)
+    document.getElementById('cash-drawer').children[1].addEventListener('click', autoReset)
 
     // listen for cancel btn
-    document.getElementById('clear-form').addEventListener('click', () => {
+    document.getElementById('cash-drawer').children[2].addEventListener('click', () => {
         document.getElementById('cash-drawer').children[4].children[0].reset()
     })
 })
@@ -66,26 +66,30 @@ const addMoneyToMachine = (submittedMoney) => {
 
 // this function switches us to the correct mode
 const applyRole = () => {
-    const custBtns = document.getElementsByClassName('customer')
-    const maintBtns = document.getElementsByClassName('maintenance')
+    const customerClass = document.getElementsByClassName('customer')
+    const maintenanceClass = document.getElementsByClassName('maintenance')
     if (document.getElementById('role-toggle').children[0].checked) {
-        for (let button of maintBtns) {
-            button.disabled = true
+        for (let item of maintenanceClass) {
+            item.disabled = true
+            item.style.display = "none"
         }
-        for (let button of custBtns) {
-            button.disabled = false
+        for (let item of customerClass) {
+            item.disabled = false
+            item.style.display = "block"
         }
-
-        document.getElementById('add-money').style.display = "block"
-        document.getElementById('cash-drawer').style.display = "none"
-        document.getElementById('dispenser').style.display = "block"
+        //console.log(document.getElementsByClassName('maintenance'))
+        //document.getElementById('add-money').style.display = "block"
+        //document.getElementById('cash-drawer').style.display = "none"
+        //document.getElementById('dispenser').style.display = "block"
     }
     else {
-        for (let button of maintBtns) {
-            button.disabled = false
+        for (let item of maintenanceClass) {
+            item.disabled = false
+            item.style.display = "block"
         }
-        for (let button of custBtns) {
-            button.disabled = true
+        for (let item of customerClass) {
+            item.disabled = true
+            item.style.display = "none"
         }
         document.getElementById('add-money').style.display = "none"
         document.getElementById('cash-drawer').style.display = "block"
@@ -176,6 +180,11 @@ const displaySnack = (snack) => {
     `
     applyRole()
     tableElement.children[0].addEventListener('click', () => handleSnackOrder(snack))
+    tableElement.children[1].addEventListener('click', () => handleEdit(snack))
+}
+
+const handleEdit = (snack) => {
+    console.log(snack)
 }
 
 // this function will handle when a user tries to order a snack

@@ -38,30 +38,30 @@
                 </tr>
             </table>
         </div>
-        <div id="add-money">
+        <div id="add-money" class="customer">
             <h4>Click to insert given denomination</h4>
             <div>
-                <button type="button" value="0" class="customer">$5.00 bill</button>
-                <button type="button" value="1" class="customer">$1.00 bill</button>
-                <button type="button" value="2" class="customer">Quarter</button>
-                <button type="button" value="3" class="customer">Dime</button>
-                <button type="button" value="4" class="customer">Nickel</button>
+                <button type="button" value="0">$5.00 bill</button>
+                <button type="button" value="1">$1.00 bill</button>
+                <button type="button" value="2">Quarter</button>
+                <button type="button" value="3">Dime</button>
+                <button type="button" value="4">Nickel</button>
             </div>
-            <div>Amount tendered: <span id="amt-tendered">$0.00</span><button type="button" id="return-money" class="customer">Return money</button>
+            <div>Amount tendered: <span id="amt-tendered">$0.00</span><button type="button" id="return-money">Return money</button>
             </div>
         </div>
-        <div id="dispenser">
+        <div id="dispenser" class="customer">
             <h4>Dispenser</h4>
             <div>
             </div>
         </div>
-        <div id="cash-drawer">
+        <div id="cash-drawer" class="maintenance">
             <h4>Cash Drawer</h4>
-            <button id="auto-reset" type="button" class="maintenance">Auto reset</button>
-            <button id="clear-form" type="button" class="maintenance">Cancel</button>
+            <button type="button">Auto reset</button>
+            <button type="button">Cancel</button>
             <table>
-                <form id="cash-drawer-submit">
-                    <input type="submit" value="Submit" class="maintenance">
+                <form>
+                    <input type="submit" value="Submit">
                     <tr>
                         <td>Denomination</td>
                         <td>Current amount</td>
@@ -70,27 +70,27 @@
                     <tr>
                         <td>$5.00 bills:</td>
                         <td></td>
-                        <td><input type="text" placeholder="0" class="maintenance"></td>
+                        <td><input type="text" placeholder="0"></td>
                     </tr>
                     <tr>
                         <td>$1.00 bills:</td>
                         <td></td>
-                        <td><input type="text" placeholder="0" class="maintenance"></td>
+                        <td><input type="text" placeholder="0"></td>
                     </tr>
                     <tr>
                         <td>Quarters:</td>
                         <td></td>
-                        <td><input type="text" placeholder="0" class="maintenance"></td>
+                        <td><input type="text" placeholder="0"></td>
                     </tr>
                     <tr>
                         <td>Dimes:</td>
                         <td></td>
-                        <td><input type="text" placeholder="0" class="maintenance"></td>
+                        <td><input type="text" placeholder="0"></td>
                     </tr>
                     <tr>
                         <td>Nickels:</td>
                         <td></td>
-                        <td><input type="text" placeholder="0" class="maintenance"></td>
+                        <td><input type="text" placeholder="0"></td>
                     </tr>
                 </form>
             </table>
