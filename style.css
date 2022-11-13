@@ -17,8 +17,12 @@ h4 {
 #snack-display td {
   border: 1px solid;
   height: 85px;
-  width: 90px;
+  width: 100px;
   text-align: center;
+  margin: auto;
+}
+#snack-display button {
+  margin: auto;
 }
 #dispenser div {
   height: 70px;
@@ -30,20 +34,11 @@ h4 {
 }
 #cash-drawer table {
   border: 1px solid;
-  margin: 15px;
+  margin: 10px;
 }
 #cash-drawer td {
   border: 1px solid;
   width: 110px;
-}
-
-input[type=text] {width: 20px;}
-
-form {margin: 10px;}
-
-.snack-btn {
-  height: 50px;
-  width: 80px;
 }
 
 #return-money {margin-left: 10px;}
