@@ -77,31 +77,31 @@
     {
       "id": 1,
       "name": "$5.00 bill",
-      "quantity": 7,
+      "quantity": 0,
       "value": 5
     },
     {
       "id": 2,
       "name": "$1.00 bill",
-      "quantity": 57,
+      "quantity": 50,
       "value": 1
     },
     {
       "id": 3,
       "name": "quarter",
-      "quantity": 207,
+      "quantity": 200,
       "value": 0.25
     },
     {
       "id": 4,
       "name": "dime",
-      "quantity": 507,
+      "quantity": 500,
       "value": 0.1
     },
     {
       "id": 5,
       "name": "nickel",
-      "quantity": 507,
+      "quantity": 500,
       "value": 0.05
     }
   ]

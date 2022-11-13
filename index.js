@@ -176,6 +176,11 @@ const displaySnack = (snack) => {
             $${snack.price.toFixed(2)}<br>
             ${snack.quantity} left
         </button>
+        <div class="maintenance">
+            ${snack.name}<br>
+            $${snack.price.toFixed(2)}<br>
+            ${snack.quantity} left
+        </div>
         <button type="button" class="maintenance">Edit</button>
     `
     applyRole()

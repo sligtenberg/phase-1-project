@@ -1,5 +1,7 @@
 body {background-color: rgb(175, 255, 178);}
-button {background-color: rgb(226, 230, 165)}
+button {
+  background-color: rgb(226, 230, 165);
+}
 input {background-color: rgb(226, 230, 165)}
 
 h4 {
@@ -13,17 +15,20 @@ h4 {
 #snack-display {
   border: 1px solid;
   margin-left: 10px;
+  border-collapse: collapse;
 }
 #snack-display td {
   border: 1px solid;
-  height: 85px;
+  height: 100px;
   width: 100px;
   text-align: center;
   margin: auto;
 }
+
 #snack-display button {
   margin: auto;
 }
+
 #dispenser div {
   height: 70px;
   width: 200px;
@@ -35,10 +40,16 @@ h4 {
 #cash-drawer table {
   border: 1px solid;
   margin: 10px;
+  border-collapse: collapse;
 }
-#cash-drawer td {
+#cash-drawer table th {
   border: 1px solid;
-  width: 110px;
+}
+
+#cash-drawer td {
+  width: 100px;
+  border-left: 1px solid;
+  padding-left: 10px;
 }
 
 #return-money {margin-left: 10px;}
