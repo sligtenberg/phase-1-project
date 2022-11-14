@@ -12,20 +12,23 @@ h4 {
 #role-toggle {
   margin-left: 10px;
 }
-#snack-display {
+#display table {
   border: 1px solid;
   margin-left: 10px;
   border-collapse: collapse;
 }
-#snack-display td {
+#display td {
   border: 1px solid;
   height: 100px;
   width: 100px;
   text-align: center;
   margin: auto;
 }
+#display  input {
+  width: 80px
+}
 
-#snack-display button {
+#display button {
   margin: auto;
 }
 
@@ -54,7 +57,18 @@ h4 {
 
 #return-money {margin-left: 10px;}
 
-button {margin: 2px;}
+button {
+  margin: 2px;
+}
+
+input[type=text], select {
+  border: 1px solid;
+}
+
+input[type=submit] {
+  margin: 6px;
+}
+
 #cash-drawer table input {
   width: 50px;
 }

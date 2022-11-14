@@ -168,7 +168,7 @@ const populateSnackDisplay = () => {
 // this function takes a snack and adds it to the proper place in the snack display
 // the proper place is dictated by the snack id
 const displaySnack = (snack) => {
-    const table = document.getElementById('snack-display')
+    const table = document.getElementById('display').children[1]
     let tableElement = table.rows[Math.floor((snack.id - 1) / table.rows[0].cells.length)].cells[(snack.id - 1) % table.rows[0].cells.length]
     tableElement.innerHTML = `
         <button type="button" class="customer">
@@ -176,12 +176,12 @@ const displaySnack = (snack) => {
             $${snack.price.toFixed(2)}<br>
             ${snack.quantity} left
         </button>
-        <div class="maintenance">
-            ${snack.name}<br>
-            $${snack.price.toFixed(2)}<br>
-            ${snack.quantity} left
-        </div>
-        <button type="button" class="maintenance">Edit</button>
+        <form class="maintenance">
+            <input type="text" placeholder="${snack.name}">
+            <input type="text" placeholder="$${snack.price.toFixed(2)}">
+            <input type="text" placeholder="${snack.quantity} left">
+            <input type="submit" value="Submit"/>
+        </form>
     `
     applyRole()
     tableElement.children[0].addEventListener('click', () => handleSnackOrder(snack))
