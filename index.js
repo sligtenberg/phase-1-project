@@ -185,10 +185,12 @@ const displaySnack = (snack) => {
     `
     applyRole()
     tableElement.children[0].addEventListener('click', () => handleSnackOrder(snack))
-    tableElement.children[1].addEventListener('click', () => handleEdit(snack))
+    tableElement.children[1].addEventListener('submit', event => handleSnackEdit(event, snack))
 }
 
-const handleEdit = (snack) => {
+const handleSnackEdit = (event, snack) => {
+    event.preventDefault()
+    console.log(event)
     console.log(snack)
 }
 
