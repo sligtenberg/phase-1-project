@@ -4,19 +4,19 @@
       "id": 1,
       "name": "Chips",
       "price": 0.95,
-      "quantity": 108
+      "quantity": 106
     },
     {
       "id": 2,
       "name": "Candy",
       "price": 2,
-      "quantity": 344
+      "quantity": 343
     },
     {
       "id": 3,
       "name": "Soda",
       "price": 1,
-      "quantity": 47
+      "quantity": 46
     },
     {
       "id": 4,
@@ -77,13 +77,13 @@
     {
       "id": 1,
       "name": "$5.00 bill",
-      "quantity": 0,
+      "quantity": 1,
       "value": 5
     },
     {
       "id": 2,
       "name": "$1.00 bill",
-      "quantity": 50,
+      "quantity": 49,
       "value": 1
     },
     {
@@ -101,7 +101,7 @@
     {
       "id": 5,
       "name": "nickel",
-      "quantity": 500,
+      "quantity": 499,
       "value": 0.05
     }
   ]

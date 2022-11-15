@@ -20,12 +20,17 @@ h4 {
 #display td {
   border: 1px solid;
   height: 100px;
-  width: 100px;
-  text-align: center;
+  width: 160px;
+  text-align: right;
   margin: auto;
 }
-#display  input {
-  width: 80px
+#display input {
+  width: 70px;
+}
+
+#display label {
+  display: inline-block;
+  text-align: right;
 }
 
 #display button {
@@ -61,7 +66,7 @@ button {
   margin: 2px;
 }
 
-input[type=text], select {
+input[type=text], input[type=number] {
   border: 1px solid;
 }
 

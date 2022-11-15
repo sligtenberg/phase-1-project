@@ -50,6 +50,15 @@ const autoReset = () => {
     }
 }
 
+// this function will take a snack as an argument, and update that snack on the server
+const updateSnackOnServer = (snack) => {
+    fetch(`http://localhost:3000/snacks/${snack.id}`, {
+        method: 'PATCH',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(snack)
+    })
+}
+
 // this function handles the maintenance action of adding money to the machine
 const addMoneyToMachine = (submittedMoney) => {
     fetch('http://localhost:3000/cash')
@@ -144,7 +153,7 @@ const updateDispenser = (content) => document.getElementById('dispenser').childr
 // this function fetches data from db.json and uses it to populate the cash drawer
 const populateCashDrawer = () => {
     fetch('http://localhost:3000/cash')
-    .then(response => response.json())
+    .then(res => res.json())
     .then(cashDrawer => {
         let table = document.getElementById('cash-drawer').children[4].children[1].children
         for (let i = 0; i < cashDrawer.length; i++) {
@@ -156,7 +165,7 @@ const populateCashDrawer = () => {
 // this function gets the snacks from the server
 const populateSnackDisplay = () => {
     fetch('http://localhost:3000/snacks')
-    .then(response => response.json())
+    .then(res => res.json())
     .then(snackCollection => {
         snackCollection.forEach(displaySnack)
     })
@@ -174,9 +183,9 @@ const displaySnack = (snack) => {
             ${snack.quantity} left
         </button>
         <form class="maintenance">
-            <input type="text" placeholder="${snack.name}">
-            <input type="text" placeholder="$${snack.price.toFixed(2)}">
-            <input type="text" placeholder="${snack.quantity} left">
+            <span>Name: </span> <input type="text" value="${snack.name}"><br>
+            <span>Price: $</span> <input type="number" value="${snack.price.toFixed(2)}" step="0.05"><br>
+            <span>Quantiy:</span> <input type="number" value="${snack.quantity}"><br>
             <input type="submit" value="Submit"/>
         </form>
     `
@@ -185,22 +194,18 @@ const displaySnack = (snack) => {
     tableElement.children[1].addEventListener('submit', event => handleSnackEdit(event, snack))
 }
 
+// this function takes edits made to a snack (form submission) and a snack as args, and updates the snack on the server
+// called as a result of a submit event
+// need to add ability to prevent bad submissions (negative quantities, prices, non-numbers, etc.)
 const handleSnackEdit = (event, snack) => {
     event.preventDefault()
     const newName = event.target[0].value
-    const newPrice = event.target[1].value
-    const newQuantity = event.target[2].value
-    if (newName != '') {
-        snack.name = newName
-    }
-    if (typeof newPrice === "number") {
-        snack.price = newPrice
-    }
-    if (typeof newQuantity === "number") {
-        snack.quantity = newQuantity
-    }
-    console.log(snack)
-    // send the fetch to update the snack
+    const newPrice = Number(event.target[1].value)
+    const newQuantity = Number(event.target[2].value)
+    snack.name = newName
+    snack.price = newPrice
+    snack.quantity = newQuantity
+    updateSnackOnServer(snack)
 }
 
 // this function will handle when a user tries to order a snack
@@ -261,14 +266,8 @@ async function sendMoneyInCashDrawer(moneyToSend) {
 // send the updated snack back to the server 
 // update the html element
 const snackDelivery = (snack) => {
-    //for (i = 0; i < 1000000000; i++) {}
     snack.quantity--
     updateDispenser(`${snack.name}!`)
-    fetch(`http://localhost:3000/snacks/${snack.id}`, {
-        method: 'PATCH',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify(snack)
-    })
-    .then(res => res.json())
-    .then(displaySnack(snack))
+    updateSnackOnServer(snack)
+    displaySnack(snack)
 }
