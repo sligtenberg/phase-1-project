@@ -38,10 +38,11 @@ document.addEventListener('DOMContentLoaded', () => {
     })
 })
 
-// this is the default amount of change that the maintenance person should leave in the machine
+// this is the default quantity of each denomination of change that the maintenance person should leave in the machine
+// when autoRest is called, the fields to add money are automatically filled to set the money in the macihine to these numbers
 const defaultCashDrawer = [0, 50, 200, 500, 500]
 
-// this function resets the cash in the machine to a default level
+// this function resets the quantity of each denomination of change in the machine to a default level
 const autoReset = () => {
     let tblRows = document.getElementById('cash-drawer').children[4].children[1].children
     for (let i = 0; i < defaultCashDrawer.length; i++) {
@@ -186,8 +187,20 @@ const displaySnack = (snack) => {
 
 const handleSnackEdit = (event, snack) => {
     event.preventDefault()
-    console.log(event)
+    const newName = event.target[0].value
+    const newPrice = event.target[1].value
+    const newQuantity = event.target[2].value
+    if (newName != '') {
+        snack.name = newName
+    }
+    if (typeof newPrice === "number") {
+        snack.price = newPrice
+    }
+    if (typeof newQuantity === "number") {
+        snack.quantity = newQuantity
+    }
     console.log(snack)
+    // send the fetch to update the snack
 }
 
 // this function will handle when a user tries to order a snack
