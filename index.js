@@ -141,13 +141,16 @@ const displaySnack = snack => {
         </button>
         <form class="maintenance">
             <span>Name: </span> <input type="text" value="${snack.name}"><br>
-            <span>Price: $</span> <input type="number" value="${snack.price.toFixed(2)}" step="0.05"><br>
-            <span>Quantiy:</span> <input type="number" value="${snack.quantity}"><br>
+            <span>Price: $</span> <input type="number" value="${snack.price.toFixed(2)}" min="0" step="0.05"><br>
+            <span>Quantiy:</span> <input type="number" value="${snack.quantity}" min="0"><br>
             <input type="submit" value="Submit"/>
         </form>
     `
     applyRole()
     tableElement.children[0].addEventListener('click', () => handleSnackOrder(snack))
+    tableElement.children[1].children[4].addEventListener('change', () => {
+        tableElement.children[1].children[4].value = Number(tableElement.children[1].children[4].value).toFixed(2)
+    })
     tableElement.children[1].addEventListener('submit', event => handleSnackEditSubmit(event, snack))
 }
 

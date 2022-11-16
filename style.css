@@ -19,8 +19,8 @@ h4 {
 }
 #display td {
   border: 1px solid;
-  height: 100px;
-  width: 160px;
+  height: 120px;
+  width: 150px;
   text-align: right;
   margin: auto;
 }
@@ -35,6 +35,8 @@ h4 {
 
 #display button {
   margin: auto;
+  width: 100px;
+  height: 100px;
 }
 
 #dispenser div {
