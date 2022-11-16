@@ -23,9 +23,12 @@ h4 {
   width: 150px;
   text-align: right;
   margin: auto;
+  font-size: small;
+  padding: 10px;
 }
 #display input {
-  width: 70px;
+  width: 80px;
+  font-size: small;
 }
 
 #display label {
@@ -73,7 +76,7 @@ input[type=text], input[type=number] {
 }
 
 input[type=submit] {
-  margin: 6px;
+  margin: 25px 25px 0px 25px;
 }
 
 #cash-drawer table input {
