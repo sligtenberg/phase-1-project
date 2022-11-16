@@ -2,9 +2,9 @@
   "snacks": [
     {
       "id": 1,
-      "name": "Chips",
-      "price": 0.95,
-      "quantity": 106
+      "name": "Chippies",
+      "price": 1.05,
+      "quantity": 102
     },
     {
       "id": 2,
@@ -40,13 +40,13 @@
       "id": 7,
       "name": "Pretzels",
       "price": 1,
-      "quantity": 319
+      "quantity": 316
     },
     {
       "id": 8,
       "name": "Bubble Gum",
       "price": 0.2,
-      "quantity": 319
+      "quantity": 317
     },
     {
       "id": 9,
@@ -58,7 +58,7 @@
       "id": 10,
       "name": "Ramen",
       "price": 0.5,
-      "quantity": 319
+      "quantity": 318
     },
     {
       "id": 11,
@@ -77,13 +77,13 @@
     {
       "id": 1,
       "name": "$5.00 bill",
-      "quantity": 1,
+      "quantity": 0,
       "value": 5
     },
     {
       "id": 2,
       "name": "$1.00 bill",
-      "quantity": 49,
+      "quantity": 50,
       "value": 1
     },
     {
@@ -101,7 +101,7 @@
     {
       "id": 5,
       "name": "nickel",
-      "quantity": 499,
+      "quantity": 500,
       "value": 0.05
     }
   ]
