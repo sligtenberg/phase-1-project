@@ -117,7 +117,7 @@ const updateSnackOnServer = snack => {
 
 // sendMoneyInCashDrawer takes an array of money objects and send them to the server via a PATCH request
 const sendMoneyInCashDrawer = moneyToSend => {
-    console.log(moneyToSend)
+    //console.log(moneyToSend)
     for (let i = 0; i < moneyToSend.length; i++) {
         fetch(`http://localhost:3000/cash/${i+1}`, {
             method: 'PATCH',
@@ -150,8 +150,7 @@ const displaySnack = snack => {
     applyRole()
     tableElement.children[0].addEventListener('click', () => handleSnackOrder(snack))
     tableElement.children[1].children[4].addEventListener('change', () => {
-       // console.log(tableElement.children[1].children[4].value)
-        //tableElement.children[1].children[4].value = Number(tableElement.children[1].children[4].value.slice(1)).toFixed(2)
+        tableElement.children[1].children[4].value = Number(tableElement.children[1].children[4].value.slice(1)).toFixed(2)
     })
     tableElement.children[1].addEventListener('submit', event => handleSnackEditSubmit(event, snack))
 }
