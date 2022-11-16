@@ -92,7 +92,7 @@ const populateSnackDisplay = () => {
     })
 }
 
-// populateCashDrawer fetches data from the server and uses it to populate the cash drawer
+// populateCashDrawer fetches data from the server and uses it to populate the cash drawer current amounts
 const populateCashDrawer = () => {
     fetch('http://localhost:3000/cash')
     .then(res => res.json())
@@ -117,13 +117,14 @@ const updateSnackOnServer = snack => {
 
 // sendMoneyInCashDrawer takes an array of money objects and send them to the server via a PATCH request
 const sendMoneyInCashDrawer = moneyToSend => {
+    console.log(moneyToSend)
     for (let i = 0; i < moneyToSend.length; i++) {
         fetch(`http://localhost:3000/cash/${i+1}`, {
             method: 'PATCH',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify(moneyToSend[i])
         })
-        for (let i = 0; i < 100000000; i++) {} // dummy loop to delay the fetch requests
+        //for (let i = 0; i < 100000000; i++) {} // dummy loop to delay the fetch requests
     }
 }
 
@@ -224,9 +225,11 @@ const applyRole = () => {
 
 // handleSnackOrder is called when a user clicks a snack button
 // 1) checks if there are any left
-// 2) chacks enough money has been inserted
-// 3) checks if change can be made
-// 4) sends the snack to the customer, updates the server, and updates the amount tendered
+// 2) checks if enough money has been inserted
+// 3) fetches cash from the server
+// 4) adds the money that has been tendered to the serverside cash
+// 5) checks if change can be made
+// 5) sends the snack to the customer, updates the server, and updates the amount tendered
 const handleSnackOrder = snack => {
     if (snack.quantity === 0) updateDispenser(`Stevo's Snack Sampler is out of ${snack.name}`)
     else if (tenderedMoney.total() < snack.price) updateDispenser(`You need to enter more money to purchase ${snack.name}`)
@@ -264,8 +267,10 @@ const handleSnackOrder = snack => {
 // FUNCTIONS CALLED BY MAINTENACE MODE BUTTONS:
 
 // handleCashDrawerSubmit takes the quantities added by the user as an arg and updates the server with that data
+// 1) get the money array from the server
+// 2) loop through money array, adding the newly added amounts to the money on the server
+// 3) send the new array back to the server
 const handleCashDrawerSubmit = submittedMoney => {
-    // first, we need to get the money already on the server
     fetch('http://localhost:3000/cash')
     .then(res => res.json())
     .then(moneyInCashDrawer => {

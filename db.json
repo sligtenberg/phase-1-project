@@ -4,19 +4,19 @@
       "id": 1,
       "name": "Chippies",
       "price": 1.05,
-      "quantity": 102
+      "quantity": 92
     },
     {
       "id": 2,
       "name": "Candy",
       "price": 2,
-      "quantity": 343
+      "quantity": 335
     },
     {
       "id": 3,
       "name": "Soda",
       "price": 1,
-      "quantity": 46
+      "quantity": 39
     },
     {
       "id": 4,
@@ -28,25 +28,25 @@
       "id": 5,
       "name": "Crackers",
       "price": 1.5,
-      "quantity": 319
+      "quantity": 302
     },
     {
       "id": 6,
       "name": "Popcorn",
       "price": 0.75,
-      "quantity": 319
+      "quantity": 313
     },
     {
       "id": 7,
       "name": "Pretzels",
       "price": 1,
-      "quantity": 316
+      "quantity": 305
     },
     {
       "id": 8,
       "name": "Bubble Gum",
       "price": 0.2,
-      "quantity": 317
+      "quantity": 315
     },
     {
       "id": 9,
@@ -58,7 +58,7 @@
       "id": 10,
       "name": "Ramen",
       "price": 0.5,
-      "quantity": 318
+      "quantity": 310
     },
     {
       "id": 11,
@@ -77,25 +77,25 @@
     {
       "id": 1,
       "name": "$5.00 bill",
-      "quantity": 0,
+      "quantity": 20,
       "value": 5
     },
     {
       "id": 2,
       "name": "$1.00 bill",
-      "quantity": 50,
+      "quantity": 34,
       "value": 1
     },
     {
       "id": 3,
       "name": "quarter",
-      "quantity": 200,
+      "quantity": 185,
       "value": 0.25
     },
     {
       "id": 4,
       "name": "dime",
-      "quantity": 500,
+      "quantity": 497,
       "value": 0.1
     },
     {

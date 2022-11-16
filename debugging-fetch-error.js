@@ -3,30 +3,30 @@
 //  - deliver the snack
 //  - update the amount tendered
 // if it cannot make change: alert the user that change cannot be made for thier order
-const purchaseSnack = async (snack) => {
-    fetch('http://localhost:3000/cash')
-    .then(res => res.json())
-    .then(moneyInCashDrawer => {
-        let changeNeeded = tenderedMoney.total() - snack.price
-        const potentialChange = [0, 0, 0, 0, 0]
-        for (let i = 0; i < moneyInCashDrawer.length; i++) {
-            moneyInCashDrawer[i].quantity += tenderedMoney.money[i].quantity
-            //debugger
-            while (changeNeeded >= moneyInCashDrawer[i].value && moneyInCashDrawer[i].quantity > 0) {
-                //debugger
-                potentialChange[i]++
-                moneyInCashDrawer[i].quantity--
-                changeNeeded = (changeNeeded - moneyInCashDrawer[i].value).toFixed(2)
-                //debugger
-            }
-        }
-        //debugger
-        if (Number(changeNeeded) === 0) {
+// const purchaseSnack = async (snack) => {
+//     fetch('http://localhost:3000/cash')
+//     .then(res => res.json())
+//     .then(moneyInCashDrawer => {
+//         let changeNeeded = tenderedMoney.total() - snack.price
+//         const potentialChange = [0, 0, 0, 0, 0]
+//         for (let i = 0; i < moneyInCashDrawer.length; i++) {
+//             moneyInCashDrawer[i].quantity += tenderedMoney.money[i].quantity
+//             //debugger
+//             while (changeNeeded >= moneyInCashDrawer[i].value && moneyInCashDrawer[i].quantity > 0) {
+//                 //debugger
+//                 potentialChange[i]++
+//                 moneyInCashDrawer[i].quantity--
+//                 changeNeeded = (changeNeeded - moneyInCashDrawer[i].value).toFixed(2)
+//                 //debugger
+//             }
+//         }
+//         //debugger
+//         if (Number(changeNeeded) === 0) {
 
-            // update the tenderedMoney object - this is only necessary with some of the fetch versions below
-            for (let i = 0; i < potentialChange.length; i++) {
-                tenderedMoney.money[i].quantity = potentialChange[i]
-            }
+//             // update the tenderedMoney object - this is only necessary with some of the fetch versions below
+//             for (let i = 0; i < potentialChange.length; i++) {
+//                 tenderedMoney.money[i].quantity = potentialChange[i]
+//             }
 
 /*******************************************************************************************************
  * The code below randomly encounters:
@@ -242,29 +242,29 @@ const purchaseSnack = async (snack) => {
             //     for (let i = 0; i < 100000000; i++) {}
             // }
             // ************************************************************************************
-            sendMoneyInCashDrawer(moneyInCashDrawer)
-            updateAmtTendered(tenderedMoney.total())
-            snackDelivery(snack)
-        }
-        else {
-            // add functionality to try again, but getting around the quarters and dimes problem
-            updateDispenser(`Stevo's Snack Sampler can't make change for ${snack.name}`)
-        }
-    })
-}
+//             sendMoneyInCashDrawer(moneyInCashDrawer)
+//             updateAmtTendered(tenderedMoney.total())
+//             snackDelivery(snack)
+//         }
+//         else {
+//             // add functionality to try again, but getting around the quarters and dimes problem
+//             updateDispenser(`Stevo's Snack Sampler can't make change for ${snack.name}`)
+//         }
+//     })
+// }
 
 // the following two functions are part of the race condition experimentation 
 // fails
-async function sendMoneyInCashDrawer(moneyToSend) {
-    for (let i = 0; i < moneyToSend.length; i++) {
-        await fetch(`http://localhost:3000/cash/${i+1}`, {
-            method: 'PATCH',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify(moneyToSend[i])
-        })
-        for (let i = 0; i < 100000000; i++) {} // dummy loop to delay the fetch requests
-    }
-}
+// async function sendMoneyInCashDrawerTest(moneyToSend) {
+//     for (let i = 0; i < moneyToSend.length; i++) {
+//         await fetch(`http://localhost:3000/cash/${i+1}`, {
+//             method: 'PATCH',
+//             headers: {'Content-Type': 'application/json'},
+//             body: JSON.stringify(moneyToSend[i])
+//         })
+//         //for (let i = 0; i < 100000000; i++) {} // dummy loop to delay the fetch requests
+//     }
+// }
 
 // fails
 // async function sendFetch (denomination) {
@@ -277,3 +277,24 @@ async function sendMoneyInCashDrawer(moneyToSend) {
 // }
 
 // this function executes when a snack should be delivered to the customer
+
+const downloadMoneyFromCashDrawerTest = () => {
+    fetch('http://localhost:3000/cash')
+    .then(res => res.json())
+    .then(moneyInCashDrawer => {
+        console.log(moneyInCashDrawer)
+        sendMoneyInCashDrawerTest(moneyInCashDrawer)
+    })
+}
+
+const sendMoneyInCashDrawerTest = moneyToSend => {
+    for (let i = 0; i < moneyToSend.length; i++) {
+        fetch(`http://localhost:3000/cash/${i+1}`, {
+            method: 'PATCH',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify(moneyToSend[i])
+        })
+    }
+}
+
+downloadMoneyFromCashDrawerTest()
