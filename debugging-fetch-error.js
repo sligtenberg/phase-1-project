@@ -203,7 +203,9 @@
             //         method: 'PATCH',
             //         headers: {'Content-Type': 'application/json'},
             //         body: JSON.stringify(moneyInCashDrawer[index])
-            //     }).then(() => {
+            //     })
+            //     .then(res => res.json())
+            //     .then(() => {
             //         recursiveSolution(index + 1)
             //     })
             // }

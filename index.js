@@ -11,6 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
         applyRole()
         updateDispenser()
         populateSnackDisplay()
+        populateCashDrawer()
     })
 
     // CUSTOMER MODE EVENT LISTENERS:
@@ -150,7 +151,7 @@ const displaySnack = snack => {
     applyRole()
     tableElement.children[0].addEventListener('click', () => handleSnackOrder(snack))
     tableElement.children[1].children[4].addEventListener('change', () => {
-        tableElement.children[1].children[4].value = Number(tableElement.children[1].children[4].value.slice(1)).toFixed(2)
+        tableElement.children[1].children[4].value = Number(tableElement.children[1].children[4].value).toFixed(2)
     })
     tableElement.children[1].addEventListener('submit', event => handleSnackEditSubmit(event, snack))
 }

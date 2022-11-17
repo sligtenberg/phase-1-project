@@ -2,15 +2,15 @@
   "snacks": [
     {
       "id": 1,
-      "name": "Chippies",
-      "price": 1.05,
-      "quantity": 92
+      "name": "Chips",
+      "price": 1,
+      "quantity": 89
     },
     {
       "id": 2,
       "name": "Candy",
       "price": 2,
-      "quantity": 335
+      "quantity": 334
     },
     {
       "id": 3,
@@ -22,13 +22,13 @@
       "id": 4,
       "name": "Gummies",
       "price": 2.5,
-      "quantity": 42
+      "quantity": 41
     },
     {
       "id": 5,
       "name": "Crackers",
       "price": 1.5,
-      "quantity": 302
+      "quantity": 301
     },
     {
       "id": 6,
@@ -46,7 +46,7 @@
       "id": 8,
       "name": "Bubble Gum",
       "price": 0.2,
-      "quantity": 315
+      "quantity": 311
     },
     {
       "id": 9,
@@ -58,13 +58,13 @@
       "id": 10,
       "name": "Ramen",
       "price": 0.5,
-      "quantity": 310
+      "quantity": 309
     },
     {
       "id": 11,
       "name": "Toys",
-      "price": 5,
-      "quantity": 319
+      "price": 4,
+      "quantity": 318
     },
     {
       "id": 12,
@@ -77,25 +77,25 @@
     {
       "id": 1,
       "name": "$5.00 bill",
-      "quantity": 20,
+      "quantity": 0,
       "value": 5
     },
     {
       "id": 2,
       "name": "$1.00 bill",
-      "quantity": 34,
+      "quantity": 50,
       "value": 1
     },
     {
       "id": 3,
       "name": "quarter",
-      "quantity": 185,
+      "quantity": 200,
       "value": 0.25
     },
     {
       "id": 4,
       "name": "dime",
-      "quantity": 497,
+      "quantity": 500,
       "value": 0.1
     },
     {
