@@ -2,94 +2,94 @@
   "snacks": [
     {
       "id": 1,
-      "name": "Chips",
-      "price": 1,
-      "quantity": 89
+      "name": "Bagles",
+      "price": 1.45,
+      "quantity": 0
     },
     {
       "id": 2,
       "name": "Candy",
       "price": 2,
-      "quantity": 334
+      "quantity": 0
     },
     {
       "id": 3,
       "name": "Soda",
       "price": 1,
-      "quantity": 39
+      "quantity": 24
     },
     {
       "id": 4,
       "name": "Gummies",
       "price": 2.5,
-      "quantity": 41
+      "quantity": 30
     },
     {
       "id": 5,
       "name": "Crackers",
       "price": 1.5,
-      "quantity": 301
+      "quantity": 17
     },
     {
       "id": 6,
       "name": "Popcorn",
       "price": 0.75,
-      "quantity": 313
+      "quantity": 3
     },
     {
       "id": 7,
-      "name": "Pretzels",
-      "price": 1,
-      "quantity": 305
+      "name": "Popcorn",
+      "price": 0.75,
+      "quantity": 0
     },
     {
       "id": 8,
-      "name": "Bubble Gum",
-      "price": 0.2,
-      "quantity": 311
+      "name": "Pretzels",
+      "price": 1,
+      "quantity": 18
     },
     {
       "id": 9,
       "name": "Bagles",
       "price": 1.75,
-      "quantity": 319
+      "quantity": 11
     },
     {
       "id": 10,
-      "name": "Ramen",
-      "price": 0.5,
-      "quantity": 309
+      "name": "Soda",
+      "price": 1,
+      "quantity": 31
     },
     {
       "id": 11,
-      "name": "Toys",
-      "price": 4,
-      "quantity": 318
+      "name": "Soup",
+      "price": 1.75,
+      "quantity": 4
     },
     {
       "id": 12,
       "name": "Soup",
       "price": 1.75,
-      "quantity": 319
+      "quantity": 5
     }
   ],
-  "cash": [
+  "cashes": [
     {
       "id": 1,
       "name": "$5.00 bill",
-      "quantity": 0,
+      "quantity": 9,
       "value": 5
     },
     {
       "id": 2,
       "name": "$1.00 bill",
-      "quantity": 50,
+      "quantity": 47,
       "value": 1
     },
     {
       "id": 3,
       "name": "quarter",
-      "quantity": 200,
+      "quantity": 196,
       "value": 0.25
     },
     {
@@ -101,7 +101,7 @@
     {
       "id": 5,
       "name": "nickel",
-      "quantity": 500,
+      "quantity": 499,
       "value": 0.05
     }
   ]
