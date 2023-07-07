@@ -4,19 +4,19 @@
       "id": 1,
       "name": "Bagles",
       "price": 1.45,
-      "quantity": 0
+      "quantity": 744
     },
     {
       "id": 2,
       "name": "Candy",
       "price": 2,
-      "quantity": 0
+      "quantity": 32
     },
     {
       "id": 3,
       "name": "Soda",
       "price": 1,
-      "quantity": 24
+      "quantity": 2412
     },
     {
       "id": 4,
@@ -58,7 +58,7 @@
       "id": 10,
       "name": "Soda",
       "price": 1,
-      "quantity": 31
+      "quantity": 23
     },
     {
       "id": 11,
@@ -77,19 +77,19 @@
     {
       "id": 1,
       "name": "$5.00 bill",
-      "quantity": 9,
+      "quantity": 2,
       "value": 5
     },
     {
       "id": 2,
       "name": "$1.00 bill",
-      "quantity": 47,
+      "quantity": 48,
       "value": 1
     },
     {
       "id": 3,
       "name": "quarter",
-      "quantity": 196,
+      "quantity": 200,
       "value": 0.25
     },
     {
@@ -101,7 +101,7 @@
     {
       "id": 5,
       "name": "nickel",
-      "quantity": 499,
+      "quantity": 500,
       "value": 0.05
     }
   ]

@@ -88,35 +88,16 @@ const tenderedMoney = {
 const populateSnackDisplay = () => {
     fetch('http://localhost:3000/snacks')
     .then(res => res.json())
-    .then(snackCollection => {
-        snackCollection.sort((a, b) => {
-            const nameA = a.name.toUpperCase(); // ignore upper and lowercase
-            const nameB = b.name.toUpperCase(); // ignore upper and lowercase
-            if (nameA < nameB) {
-                return -1;
-            }
-            if (nameA > nameB) {
-                return 1;
-            }
-            // names must be equal
-            return 0;
-        })
-        for (let i = 0; i < snackCollection.length; i++) {
-            snackCollection[i].id = i + 1
-        }
-        snackCollection.forEach(displaySnack)
-    })
+    .then(snackCollection => snackCollection.forEach(displaySnack))
 }
 
 // populateCashDrawer fetches data from the server and uses it to populate the cash drawer current amounts
 const populateCashDrawer = () => {
-    fetch('http://localhost:3000/cash')
+    fetch('http://localhost:3000/cashes')
     .then(res => res.json())
     .then(cashDrawer => {
         let table = document.getElementById('cash-drawer').children[4].children[1].children
-        for (let i = 0; i < cashDrawer.length; i++) {
-            table[i + 1].children[1].textContent = cashDrawer[i].quantity
-        }
+        cashDrawer.forEach(denomination => table[denomination.id].children[1].textContent = denomination.quantity)
     })
 }
 
@@ -131,17 +112,15 @@ const updateSnackOnServer = snack => {
     })
 }
 
-// sendMoneyInCashDrawer takes an array of money objects and send them to the server via a PATCH request
+// sendMoneyInCashDrawer takes an array of money objects and sends them to the server via PATCH requests
 const sendMoneyInCashDrawer = moneyToSend => {
-    //console.log(moneyToSend)
-    for (let i = 0; i < moneyToSend.length; i++) {
-        fetch(`http://localhost:3000/cash/${i+1}`, {
-            method: 'PATCH',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify(moneyToSend[i])
-        })
-        //for (let i = 0; i < 100000000; i++) {} // dummy loop to delay the fetch requests
-    }
+  moneyToSend.forEach(denomination => {
+    fetch(`http://localhost:3000/cashes/${denomination.id}`, {
+      method: 'PATCH',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify(denomination)
+    })
+  })
 }
 
 // displaySnack takes a snack object as an arg and adds it to the proper place in the snack display - dictated by the snack id
@@ -249,9 +228,10 @@ const handleSnackOrder = snack => {
     if (snack.quantity === 0) updateDispenser(`Stevo's Snack Sampler is out of ${snack.name}`)
     else if (tenderedMoney.total() < snack.price) updateDispenser(`You need to enter more money to purchase ${snack.name}`)
     else {
-        fetch('http://localhost:3000/cash')
+        fetch('http://localhost:3000/cashes')
         .then(res => res.json())
         .then(moneyInCashDrawer => {
+            moneyInCashDrawer.sort((a, b) => a.id - b.id) // need moneyInCashDrawer to have matching index of tenderedMoney
             let changeNeeded = tenderedMoney.total() - snack.price
             const potentialChange = [0, 0, 0, 0, 0]
             for (let i = 0; i < moneyInCashDrawer.length; i++) {
@@ -286,15 +266,15 @@ const handleSnackOrder = snack => {
 // 2) loop through money array, adding the newly added amounts to the money on the server
 // 3) send the new array back to the server
 const handleCashDrawerSubmit = submittedMoney => {
-    fetch('http://localhost:3000/cash')
+    fetch('http://localhost:3000/cashes')
     .then(res => res.json())
     .then(moneyInCashDrawer => {
-        for (let i = 0; i < moneyInCashDrawer.length; i++) {
-            moneyInCashDrawer[i].quantity += Number(submittedMoney[i + 1].value) // add the quantities added by the user
-            document.getElementById('cash-drawer').children[4].children[1].children[i + 1].children[1].textContent = moneyInCashDrawer[i].quantity
-        }
-        sendMoneyInCashDrawer(moneyInCashDrawer)
-        document.getElementById('cash-drawer').children[4].children[0].reset()
+      moneyInCashDrawer.forEach(denomination => {
+        denomination.quantity += Number(submittedMoney[denomination.id].value) // add the quantities added by the user
+        document.getElementById('cash-drawer').children[4].children[1].children[denomination.id].children[1].textContent = denomination.quantity
+      })
+      sendMoneyInCashDrawer(moneyInCashDrawer)
+      document.getElementById('cash-drawer').children[4].children[0].reset()
     })
 }
 
